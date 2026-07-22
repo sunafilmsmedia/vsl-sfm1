@@ -1,0 +1,683 @@
+/* ============================================================= */
+/* SUNA FILMS MEDIA — Landing /ai                                 */
+/* ============================================================= */
+
+:root {
+  --bg:          #050505;
+  --surface:     #101010;
+  --brand:       #FF5F00;
+  --brand-dark:  #E85400;
+  --text:        #FFFFFF;
+  --text-muted:  rgba(255,255,255,0.65);
+  --text-dim:    rgba(255,255,255,0.45);
+  --border:      rgba(255,255,255,0.06);
+  --success:     #22c55e;
+  --success-lt:  #6EE7B7;
+  --danger:      #FCA5A5;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Layout ---------- */
+.lp-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.lp-section-head { text-align: center; max-width: 780px; margin: 0 auto 48px; }
+
+/* ---------- Typography helpers ---------- */
+.lp-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: 18px;
+}
+
+.lp-h2 {
+  font-size: clamp(26px, 4vw, 42px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.lp-section-head__sub {
+  margin-top: 16px;
+  color: var(--text-muted);
+  font-size: clamp(15px, 2vw, 17px);
+  line-height: 1.6;
+}
+
+/* ---------- Buttons ---------- */
+.lp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.lp-btn--primary {
+  background: linear-gradient(135deg, #FF5F00 0%, #E85400 100%);
+  color: #fff;
+  padding: 15px 30px;
+  box-shadow: 0 12px 32px rgba(255,95,0,0.28);
+}
+.lp-btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 42px rgba(255,95,0,0.45);
+}
+.lp-btn--primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 12px 32px rgba(255,95,0,0.18);
+}
+
+.lp-btn--lg {
+  padding: 17px 34px;
+  font-size: 17px;
+}
+
+/* ============================================================= */
+/* SECTION 1 — HERO                                              */
+/* ============================================================= */
+.lp-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 0 90px;
+  text-align: center;
+}
+
+.lp-hero__glow {
+  position: absolute;
+  top: -300px; left: 50%; transform: translateX(-50%);
+  width: 1100px; height: 700px;
+  background: radial-gradient(circle, rgba(255,95,0,0.18) 0%, transparent 65%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.lp-hero__inner { position: relative; z-index: 2; }
+
+.lp-hero__title {
+  font-size: clamp(36px, 6.2vw, 68px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  margin-bottom: 14px;
+}
+
+.lp-hero__guarantee {
+  font-size: clamp(15px, 2vw, 20px);
+  color: var(--brand);
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.lp-hero__sub {
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: var(--text-muted);
+  margin-bottom: 36px;
+}
+
+.lp-hero__video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+  margin-bottom: 36px;
+  background: #000;
+}
+.lp-hero__video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---------- Trajectoire "condor" ---------- */
+.lp-bg-trajectory {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  animation: traj-fade 2.2s ease-out 0.4s forwards;
+  pointer-events: none;
+}
+.lp-bg-trajectory svg { width: 100%; height: 100%; }
+.lp-bg-trajectory path {
+  stroke: rgba(255,95,0,0.18);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 2600;
+  stroke-dashoffset: 2600;
+  animation: traj-draw 4.5s cubic-bezier(0.4,0,0.2,1) 0.8s forwards;
+  filter: drop-shadow(0 0 12px rgba(255,95,0,0.3));
+}
+.lp-bg-trajectory__bird {
+  position: absolute; top: 10%; right: 6%;
+  width: 90px; opacity: 0;
+  filter: brightness(0) invert(1);
+  animation: bird-in 1.8s ease-out 3.6s forwards, bird-float 5s ease-in-out 3.6s infinite;
+}
+
+@keyframes traj-fade { to { opacity: 1; } }
+@keyframes traj-draw { to { stroke-dashoffset: 0; } }
+@keyframes bird-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.85); }
+  to   { opacity: 0.14; transform: translateY(0) scale(1); }
+}
+@keyframes bird-float {
+  0%,100% { transform: translate(0,0); }
+  50%     { transform: translate(-4px,-10px); }
+}
+
+/* ============================================================= */
+/* SECTION 2 — LOGOS marquee                                    */
+/* ============================================================= */
+.lp-logos { padding: 60px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.lp-logos__title {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 36px;
+}
+
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.marquee__track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  align-items: center;
+  animation: marquee-scroll 28s linear infinite;
+}
+.marquee__logo {
+  height: 36px;
+  width: auto;
+  filter: grayscale(1) invert(1);
+  opacity: 0.7;
+  flex: 0 0 auto;
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ============================================================= */
+/* SECTION 3 — IMPACT                                           */
+/* ============================================================= */
+.lp-impact { padding: 100px 0; }
+.lp-impact__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.lp-impact__card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,95,0,0.28);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.lp-impact__client { font-size: 17px; font-weight: 800; color: #fff; }
+.lp-impact__metric { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); }
+.lp-impact__progression {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 10px 0 6px;
+}
+.lp-impact__from { font-size: 28px; color: rgba(255,255,255,0.4); font-weight: 700; }
+.lp-impact__arrow { font-size: 22px; color: var(--brand); }
+.lp-impact__to { font-size: 44px; font-weight: 900; color: #fff; letter-spacing: -0.03em; line-height: 1; }
+.lp-impact__pct {
+  align-self: flex-start;
+  padding: 6px 14px;
+  background: rgba(34,197,94,0.14);
+  color: var(--success-lt);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ============================================================= */
+/* SECTION 4 — BOOKING (gated)                                  */
+/* ============================================================= */
+.lp-booking { padding: 100px 0; }
+.lp-booking__wrap {
+  position: relative;
+  min-height: 720px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.lp-booking__calendar {
+  filter: blur(10px);
+  pointer-events: none;
+  transition: filter 0.4s ease;
+}
+.lp-booking__calendar iframe { display: block; width: 100%; min-height: 720px; border: 0; }
+.lp-booking__calendar.is-unlocked { filter: none; pointer-events: auto; }
+
+.lp-booking__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(5,5,5,0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.lp-booking__overlay.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.lp-booking__gate {
+  max-width: 420px;
+  text-align: center;
+  background: rgba(20,20,20,0.95);
+  border: 1px solid var(--border);
+  padding: 40px 32px;
+  border-radius: 16px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+}
+.lp-booking__gate p { color: var(--text-muted); margin-bottom: 22px; }
+.lp-booking__gate-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand) !important;
+  margin-bottom: 12px !important;
+}
+
+/* ============================================================= */
+/* SECTION 5 — BROKERS MURAL                                    */
+/* ============================================================= */
+.lp-brokers { padding: 100px 0; }
+.lp-brokers__title {
+  font-size: clamp(26px, 3.6vw, 40px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.lp-brokers__accent { color: var(--brand); white-space: nowrap; }
+.lp-brokers__sub {
+  margin-top: 18px;
+  color: var(--text-muted);
+  font-size: clamp(15px, 2vw, 17px);
+}
+.lp-brokers__sub strong { color: #fff; }
+
+.lp-brokers__mural {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.lp-broker-tile {
+  flex: 1 1 220px;
+  max-width: calc(25% - 1px);
+  min-width: 200px;
+  background: #050505;
+  padding: 44px 20px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  transition: background 0.25s ease;
+}
+.lp-broker-tile:hover { background: rgba(255,95,0,0.05); }
+
+.lp-broker-tile__name { font-size: 17px; font-weight: 800; color: #fff; }
+.lp-broker-tile__role {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+/* Tuile logo perso */
+.lp-broker-tile--logo img {
+  max-width: 90%;
+  max-height: 70px;
+  width: auto;
+  filter: grayscale(1) invert(1);
+  opacity: 0.95;
+}
+/* Tuile déjà blanche (webp transparent) */
+.lp-broker-tile--already-white img { filter: none !important; }
+
+/* Nom + petit logo d'agence */
+.lp-broker-tile__agency-logo {
+  margin-top: 10px;
+  max-height: 24px;
+  width: auto;
+  opacity: 0.75;
+  filter: grayscale(1) invert(1);
+}
+
+/* Combo : logo perso + agence */
+.lp-broker-tile--combo .lp-broker-tile__main-logo {
+  max-height: 60px;
+  width: auto;
+  filter: grayscale(1) invert(1);
+  opacity: 0.95;
+}
+.lp-broker-tile--combo .lp-broker-tile__agency-logo { max-height: 18px; opacity: 0.55; }
+
+.lp-brokers__closing {
+  text-align: center;
+  margin-top: 48px;
+  font-size: clamp(16px, 2.2vw, 20px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================= */
+/* SECTION 6 — TESTIMONIALS                                     */
+/* ============================================================= */
+.lp-testimonials { padding: 100px 0; }
+.lp-testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.lp-tcard {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.lp-tcard__video {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  background: #000;
+}
+.lp-tcard__video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.lp-tcard__body { padding: 22px; }
+.lp-tcard__name { font-size: 16px; font-weight: 800; color: #fff; }
+.lp-tcard__role { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+.lp-tcard__result {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ============================================================= */
+/* SECTION 7 — CTA FINAL                                        */
+/* ============================================================= */
+.lp-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 120px 0;
+  text-align: center;
+}
+.lp-cta__glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px; height: 500px;
+  background: radial-gradient(circle, rgba(255,95,0,0.16) 0%, transparent 65%);
+  z-index: 0;
+  pointer-events: none;
+}
+.lp-cta .lp-container { position: relative; z-index: 2; }
+.lp-cta__title {
+  font-size: clamp(30px, 4.6vw, 48px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.lp-cta__sub {
+  margin: 18px 0 34px;
+  font-size: clamp(16px, 2.2vw, 19px);
+  color: var(--text-muted);
+}
+.lp-cta__sub strong { color: #fff; }
+
+/* ============================================================= */
+/* FOOTER                                                       */
+/* ============================================================= */
+.lp-footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+}
+.lp-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.lp-footer__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #fff;
+}
+.lp-footer__meta { color: var(--text-dim); font-size: 14px; }
+.lp-footer__meta a:hover { color: var(--brand); }
+
+/* ============================================================= */
+/* MODAL                                                        */
+/* ============================================================= */
+.lp-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.lp-modal.is-open { display: flex; }
+.lp-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.lp-modal__box {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 32px;
+  box-shadow: 0 40px 90px rgba(0,0,0,0.7);
+  animation: modal-in 0.25s ease;
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.lp-modal__box h3 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.lp-modal__box > p { color: var(--text-muted); font-size: 15px; margin-bottom: 24px; }
+.lp-modal__close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 34px; height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.05);
+  border: none;
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.lp-modal__close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+/* ---------- Form ---------- */
+.lp-form { display: flex; flex-direction: column; gap: 16px; }
+.lp-form__field { display: flex; flex-direction: column; gap: 6px; }
+.lp-form__field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.lp-form input,
+.lp-form select {
+  width: 100%;
+  background: #050505;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 13px 15px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+}
+.lp-form input:focus,
+.lp-form select:focus {
+  outline: none;
+  border-color: var(--brand);
+}
+.lp-form input::placeholder { color: var(--text-dim); }
+
+.lp-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23FF5F00' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+.lp-form select option { background: #101010; color: #fff; }
+
+.lp-form__submit { margin-top: 8px; width: 100%; }
+
+/* ============================================================= */
+/* RESPONSIVE                                                   */
+/* ============================================================= */
+@media (max-width: 900px) {
+  .lp-impact__grid { grid-template-columns: 1fr; max-width: 460px; }
+  .lp-broker-tile { max-width: calc(50% - 1px); }
+}
+
+@media (max-width: 640px) {
+  .lp-hero { padding: 28px 0 70px; }
+  .lp-hero__title {
+    font-size: clamp(36px, 10.5vw, 52px);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+  }
+  .lp-impact,
+  .lp-booking,
+  .lp-brokers,
+  .lp-testimonials { padding: 70px 0; }
+  .lp-cta { padding: 90px 0; }
+
+  .lp-broker-tile {
+    max-width: 100%;
+    flex-basis: 100%;
+    padding: 36px 20px;
+    min-height: 120px;
+  }
+  .lp-bg-trajectory__bird { width: 60px; }
+
+  .lp-footer__inner { flex-direction: column; text-align: center; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .lp-bg-trajectory { opacity: 1; }
+  .lp-bg-trajectory path { stroke-dashoffset: 0; }
+  .lp-bg-trajectory__bird { opacity: 0.14; }
+}
