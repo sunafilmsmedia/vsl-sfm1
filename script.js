@@ -111,6 +111,17 @@
     });
   }
 
+  // Calendly n'émet ses postMessage que si embed_domain == le domaine réel.
+  // Le src statique cible le domaine de prod ; on ne le réécrit que s'il diffère
+  // (nouveau domaine custom, preview Vercel...) pour éviter un double chargement.
+  var frame = document.getElementById('calendlyFrame');
+  if (frame && frame.src.indexOf('embed_domain=' + location.hostname) === -1) {
+    var base = frame.getAttribute('data-calendly-base');
+    if (base) {
+      frame.src = base + '?embed_domain=' + encodeURIComponent(location.hostname) + '&hide_gdpr_banner=1';
+    }
+  }
+
   // Écoute Calendly : event scheduled → pixel Schedule
   window.addEventListener('message', (e) => {
     if (typeof e.data === 'object' && e.data && e.data.event &&
