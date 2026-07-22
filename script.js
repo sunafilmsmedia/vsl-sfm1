@@ -13,6 +13,15 @@
 
   let lastFocused = null;
 
+  // Wrapper sûr : Clarity peut ne pas être chargé (bloqueur de pub, réseau lent).
+  function track(name, key, value) {
+    try {
+      if (typeof clarity === 'undefined') return;
+      if (name)  clarity('event', name);
+      if (key)   clarity('set', key, value);
+    } catch (e) { /* le tracking ne doit jamais casser le tunnel */ }
+  }
+
   function openModal() {
     lastFocused = document.activeElement;
     modal.classList.add('is-open');
@@ -33,9 +42,11 @@
   document.querySelectorAll('.lp-track-cta').forEach((btn) => {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
+      var src = this.dataset.cta || 'unknown';
       if (typeof fbq !== 'undefined') {
-        fbq('trackCustom', 'ClickBookCTA', { source: this.dataset.cta || 'unknown' });
+        fbq('trackCustom', 'ClickBookCTA', { source: src });
       }
+      track('click_cta', 'cta_source', src);
       if (wrap && wrap.classList.contains('is-unlocked')) {
         wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else {
@@ -93,6 +104,8 @@
         })
         .then(() => {
           if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+          track('lead_submitted', 'lead', 'yes');
+          track('calendar_unlocked', 'domaine', payload.domaine || 'non renseigne');
           if (overlay)  overlay.classList.add('is-hidden');
           if (calendar) calendar.classList.add('is-unlocked');
           if (wrap)     wrap.classList.add('is-unlocked');
@@ -103,6 +116,7 @@
         })
         .catch((err) => {
           console.error(err);
+          track('lead_error', 'lead', 'error');
           alert("Une erreur s'est produite. Vérifie ta connexion et réessaie.");
         })
         .finally(() => {
@@ -127,6 +141,7 @@
     if (typeof e.data === 'object' && e.data && e.data.event &&
         typeof e.data.event === 'string' && e.data.event.indexOf('calendly.event_scheduled') === 0) {
       if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
+      track('booking_scheduled', 'booked', 'yes');
     }
   });
 })();
