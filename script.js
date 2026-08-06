@@ -136,6 +136,52 @@
     }
   }
 
+  // ===== VSL : bouton « Activer le son » =====
+  // L'autoplay est imposé muet par les navigateurs. Au 1er clic (geste utilisateur),
+  // on réactive le son via l'API YouTube. Fallback : rechargement de l'iframe non-muet.
+  (function initUnmute() {
+    var btn = document.getElementById('unmuteBtn');
+    var iframe = document.getElementById('vslPlayer');
+    if (!btn || !iframe) return;
+
+    var player = null;
+
+    // Charge l'API IFrame YouTube
+    var tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+
+    window.onYouTubeIframeAPIReady = function () {
+      try {
+        player = new YT.Player('vslPlayer');
+      } catch (e) { /* fallback gérera */ }
+    };
+
+    function hideOverlay() {
+      btn.classList.add('is-hidden');
+    }
+
+    btn.addEventListener('click', function () {
+      var done = false;
+      if (player && typeof player.unMute === 'function') {
+        try {
+          player.unMute();
+          player.setVolume(100);
+          player.playVideo();
+          done = true;
+        } catch (e) { done = false; }
+      }
+      // Fallback : recharge la vidéo avec le son actif (le clic autorise l'audio)
+      if (!done) {
+        var base = 'https://www.youtube.com/embed/QQHwfrj70tM';
+        iframe.src = base + '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1';
+      }
+      hideOverlay();
+      if (typeof fbq !== 'undefined') fbq('trackCustom', 'VideoUnmute');
+      track('video_unmuted', 'unmuted', 'yes');
+    });
+  })();
+
   // Écoute Calendly : event scheduled → pixel Schedule
   window.addEventListener('message', (e) => {
     if (typeof e.data === 'object' && e.data && e.data.event &&

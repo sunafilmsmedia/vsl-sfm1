@@ -86,13 +86,27 @@
       <!-- Vidéo YouTube 16:9 -->
       <div class="lp-hero__video">
         <iframe
-          src="https://www.youtube.com/embed/QQHwfrj70tM?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1"
+          id="vslPlayer"
+          src="https://www.youtube.com/embed/QQHwfrj70tM?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1"
           title="Vidéo de présentation Suna Films Media"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           loading="eager"
           allowfullscreen>
         </iframe>
+
+        <!-- Overlay tap-to-unmute : l'autoplay démarre en muet (imposé par les navigateurs),
+             ce bouton réactive le son au 1er tap puis disparaît. -->
+        <button type="button" class="lp-video-unmute" id="unmuteBtn" aria-label="Activer le son de la vidéo">
+          <span class="lp-video-unmute__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          </span>
+          <span class="lp-video-unmute__label">Cliquez pour activer le son</span>
+        </button>
       </div>
 
       <a href="#booking" class="lp-btn lp-btn--primary lp-btn--lg lp-track-cta" data-cta="hero">
