@@ -227,14 +227,15 @@
       </div>
 
       <div class="lp-booking__wrap" id="calendarWrap">
-        <!-- Calendly iframe -->
+        <!-- Widget de réservation GoHighLevel (LeadConnector) -->
         <div class="lp-booking__calendar">
           <iframe
-            id="calendlyFrame"
-            data-calendly-base="https://calendly.com/sunafilmsmedia/30min"
-            src="https://calendly.com/sunafilmsmedia/30min?embed_domain=sunafilmsmedia-vsl.vercel.app&hide_gdpr_banner=1"
-            title="Calendrier Calendly"
-            frameborder="0" scrolling="no" width="100%" height="720"></iframe>
+            id="ghlBooking"
+            src="https://api.leadconnectorhq.com/widget/booking/SUZpHLDFesSyKJdqzXlI"
+            title="Calendrier de réservation"
+            style="width:100%;border:none;overflow:hidden;"
+            scrolling="no"
+            width="100%" height="720"></iframe>
         </div>
 
         <!-- Overlay de déblocage -->
@@ -455,6 +456,8 @@
     </div>
   </div>
 
+  <!-- Script d'embed GoHighLevel : redimensionne le widget de réservation -->
+  <script src="https://link.msgsndr.com/js/form_embed.js"></script>
   <script src="/script.js"></script>
 </body>
 </html>

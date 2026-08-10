@@ -168,17 +168,6 @@
     });
   }
 
-  // Calendly n'émet ses postMessage que si embed_domain == le domaine réel.
-  // Le src statique cible le domaine de prod ; on ne le réécrit que s'il diffère
-  // (nouveau domaine custom, preview Vercel...) pour éviter un double chargement.
-  var frame = document.getElementById('calendlyFrame');
-  if (frame && frame.src.indexOf('embed_domain=' + location.hostname) === -1) {
-    var base = frame.getAttribute('data-calendly-base');
-    if (base) {
-      frame.src = base + '?embed_domain=' + encodeURIComponent(location.hostname) + '&hide_gdpr_banner=1';
-    }
-  }
-
   // ===== VSL : bouton « Activer le son » =====
   // L'autoplay est imposé muet par les navigateurs. Au 1er clic (geste utilisateur),
   // on réactive le son via l'API YouTube. Fallback : rechargement de l'iframe non-muet.
@@ -225,10 +214,23 @@
     });
   })();
 
-  // Écoute Calendly : event scheduled → pixel Schedule
-  window.addEventListener('message', (e) => {
-    if (typeof e.data === 'object' && e.data && e.data.event &&
-        typeof e.data.event === 'string' && e.data.event.indexOf('calendly.event_scheduled') === 0) {
+  // Écoute le widget de réservation GHL : RDV confirmé → pixel Schedule.
+  // Le format des messages GHL n'est pas documenté de façon stable, donc on filtre
+  // sur l'origine LeadConnector/msgsndr + des mots-clés de réservation, avec anti-doublon.
+  // Source de vérité côté business = les workflows GHL ; ceci sert au tracking pub.
+  var scheduleFired = false;
+  window.addEventListener('message', function (e) {
+    if (scheduleFired) return;
+    var origin = e.origin || '';
+    if (!/leadconnectorhq\.com|msgsndr\.com|gohighlevel\.com/i.test(origin)) return;
+
+    var raw = '';
+    try { raw = typeof e.data === 'string' ? e.data : JSON.stringify(e.data || ''); } catch (x) {}
+    // Ignore les messages de simple redimensionnement du widget
+    if (/height|resize|setheight/i.test(raw) && !/appoint|book|schedul|confirm/i.test(raw)) return;
+
+    if (/appointment.?booked|booking.?(success|complete|confirmed)|schedul|slotbooked/i.test(raw)) {
+      scheduleFired = true;
       if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
       track('booking_scheduled', 'booked', 'yes');
     }
