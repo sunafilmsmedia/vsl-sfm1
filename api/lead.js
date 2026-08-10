@@ -20,6 +20,26 @@ export default async function handler(req, res) {
   const firstName = parts[0] || '';
   const lastName  = parts.slice(1).join(' ') || '';
 
+  // Jour vs nuit selon l'heure locale du Québec (gère automatiquement l'heure avancée).
+  // Jour = 08:00–19:59, Nuit = 20:00–07:59.
+  const now = new Date();
+  let heureLocale;
+  try {
+    heureLocale = parseInt(
+      new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Toronto',
+        hour: 'numeric',
+        hour12: false,
+      }).format(now),
+      10
+    );
+    if (heureLocale === 24) heureLocale = 0; // certains runtimes renvoient "24" pour minuit
+  } catch (e) {
+    heureLocale = now.getUTCHours(); // fallback improbable
+  }
+  const estJour  = heureLocale >= 8 && heureLocale < 20;
+  const periode  = estJour ? 'jour' : 'nuit';
+
   const payload = {
     // Standard GHL
     firstName, lastName,
@@ -28,6 +48,11 @@ export default async function handler(req, res) {
 
     // Français (custom fields)
     nom, telephone, courriel, domaine,
+
+    // Segmentation jour / nuit (heure du Québec) pour router vers la bonne automatisation
+    periode,                              // "jour" | "nuit"
+    lead_type: `lead_${periode}`,         // "lead_jour" | "lead_nuit"
+    heure_quebec: heureLocale,            // 0–23, pour vérification
 
     // Metadata
     source: 'ai-landing-sunafilmsmedia',
