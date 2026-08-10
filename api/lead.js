@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST')    return res.status(405).json({ error: 'Method not allowed' });
 
-  const { nom, telephone, courriel, domaine } = req.body || {};
+  const { nom, telephone, courriel, domaine, fbclid, fbc, fbp, landing_url } = req.body || {};
 
   // Validation
   if (!nom || !telephone || !courriel) {
@@ -53,6 +53,12 @@ export default async function handler(req, res) {
     periode,                              // "jour" | "nuit"
     lead_type: `lead_${periode}`,         // "lead_jour" | "lead_nuit"
     heure_quebec: heureLocale,            // 0–23, pour vérification
+
+    // Attribution Meta (fbclid + cookies) pour matching Pixel / Conversions API
+    fbclid: fbclid || '',
+    fbc: fbc || '',
+    fbp: fbp || '',
+    landing_url: landing_url || req.headers.referer || '',
 
     // Metadata
     source: 'ai-landing-sunafilmsmedia',

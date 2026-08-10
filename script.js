@@ -22,6 +22,43 @@
     } catch (e) { /* le tracking ne doit jamais casser le tunnel */ }
   }
 
+  // ===== Attribution Meta : fbclid + cookies _fbc / _fbp =====
+  function getCookie(name) {
+    var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return m ? decodeURIComponent(m.pop()) : '';
+  }
+
+  // Au chargement : mémorise le fbclid de l'URL (persiste si l'utilisateur reste/revient).
+  (function persistFbclid() {
+    try {
+      var fromUrl = new URLSearchParams(location.search).get('fbclid');
+      if (fromUrl) localStorage.setItem('sfm_fbclid', fromUrl);
+    } catch (e) { /* localStorage indisponible : on lira l'URL au submit */ }
+  })();
+
+  // Renvoie les identifiants d'attribution Meta à joindre au lead.
+  function getFbData() {
+    var fbclid = '';
+    try { fbclid = localStorage.getItem('sfm_fbclid') || ''; } catch (e) {}
+    if (!fbclid) {
+      try { fbclid = new URLSearchParams(location.search).get('fbclid') || ''; } catch (e) {}
+    }
+
+    var fbc = getCookie('_fbc');
+    // Si le cookie _fbc n'existe pas encore mais qu'on a le fbclid, on reconstruit
+    // le format attendu par Meta : fb.1.<timestamp>.<fbclid>
+    if (!fbc && fbclid) {
+      fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+    }
+
+    return {
+      fbclid: fbclid,
+      fbc: fbc,
+      fbp: getCookie('_fbp'),
+      landing_url: location.href,
+    };
+  }
+
   function openModal() {
     lastFocused = document.activeElement;
     modal.classList.add('is-open');
@@ -86,11 +123,17 @@
         return;
       }
 
+      const fb = getFbData();
       const payload = {
         nom: data.get('nom') || '',
         telephone: data.get('telephone') || '',
         courriel: data.get('courriel') || '',
         domaine: data.get('domaine') || '',
+        // Attribution Meta
+        fbclid: fb.fbclid,
+        fbc: fb.fbc,
+        fbp: fb.fbp,
+        landing_url: fb.landing_url,
       };
 
       fetch('/api/lead', {
