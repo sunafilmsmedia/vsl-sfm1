@@ -20,8 +20,10 @@ export default async function handler(req, res) {
   const firstName = parts[0] || '';
   const lastName  = parts.slice(1).join(' ') || '';
 
-  // Jour vs nuit selon l'heure locale du Québec (gère automatiquement l'heure avancée).
-  // Jour = 08:00–19:59, Nuit = 20:00–07:59.
+  // Segmentation selon l'heure locale du Québec (gère automatiquement l'heure avancée).
+  //   JOUR         = 11:00–17:59
+  //   HORS PÉRIODE = 06:00–10:59  et  18:00–21:59
+  //   NUIT         = 22:00–05:59
   const now = new Date();
   let heureLocale;
   try {
@@ -37,8 +39,15 @@ export default async function handler(req, res) {
   } catch (e) {
     heureLocale = now.getUTCHours(); // fallback improbable
   }
-  const estJour  = heureLocale >= 8 && heureLocale < 20;
-  const periode  = estJour ? 'jour' : 'nuit';
+
+  let periode;
+  if (heureLocale >= 11 && heureLocale < 18) {
+    periode = 'jour';
+  } else if ((heureLocale >= 6 && heureLocale < 11) || (heureLocale >= 18 && heureLocale < 22)) {
+    periode = 'hors_periode';
+  } else {
+    periode = 'nuit'; // 22:00–05:59
+  }
 
   const payload = {
     // Standard GHL
@@ -49,9 +58,9 @@ export default async function handler(req, res) {
     // Français (custom fields)
     nom, telephone, courriel, domaine,
 
-    // Segmentation jour / nuit (heure du Québec) pour router vers la bonne automatisation
-    periode,                              // "jour" | "nuit"
-    lead_type: `lead_${periode}`,         // "lead_jour" | "lead_nuit"
+    // Segmentation (heure du Québec) pour router vers la bonne automatisation
+    periode,                              // "jour" | "hors_periode" | "nuit"
+    lead_type: `lead_${periode}`,         // "lead_jour" | "lead_hors_periode" | "lead_nuit"
     heure_quebec: heureLocale,            // 0–23, pour vérification
 
     // Attribution Meta (fbclid + cookies) pour matching Pixel / Conversions API
