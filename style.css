@@ -594,6 +594,65 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================= */
+/* SECTION 6B — AVIS GOOGLE                                      */
+/* ============================================================= */
+.lp-reviews { padding: 40px 0 100px; }
+
+.lp-reviews__head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 48px;
+  text-align: left;
+}
+.lp-reviews__g { width: 40px; height: 40px; flex: 0 0 auto; }
+.lp-reviews__headtext { display: flex; flex-direction: column; gap: 2px; }
+.lp-reviews__label { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: var(--text-muted); }
+.lp-reviews__rating { display: flex; align-items: center; gap: 10px; }
+.lp-reviews__rating strong { font-size: 30px; font-weight: 900; color: #fff; letter-spacing: -0.02em; }
+.lp-stars { display: inline-flex; gap: 2px; }
+.lp-stars svg { width: 20px; height: 20px; fill: #FBBC04; }
+.lp-reviews__count { font-size: 12px; color: var(--text-dim); }
+
+.lp-reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.lp-review {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+}
+.lp-review__top { display: flex; align-items: center; gap: 12px; }
+.lp-review__avatar {
+  flex: 0 0 auto;
+  width: 42px; height: 42px;
+  border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 18px;
+}
+.lp-review__top > div { flex: 1 1 auto; min-width: 0; }
+.lp-review__name { font-size: 15px; font-weight: 700; color: #fff; }
+.lp-review__meta { font-size: 12px; color: var(--text-dim); }
+.lp-review__gmark { width: 20px; height: 20px; flex: 0 0 auto; }
+.lp-review__stars { display: flex; align-items: center; gap: 10px; margin: 14px 0 8px; }
+.lp-stars--sm { color: #FBBC04; font-size: 15px; letter-spacing: 1px; }
+.lp-review__time { font-size: 12px; color: var(--text-dim); }
+.lp-review__text { font-size: 14px; line-height: 1.6; color: var(--text-muted); }
+
+@media (max-width: 640px) {
+  .lp-reviews { padding: 30px 0 70px; }
+  .lp-reviews__head { gap: 12px; margin-bottom: 34px; }
+}
+
+/* ============================================================= */
 /* SECTION 7 — CTA FINAL                                        */
 /* ============================================================= */
 .lp-cta {
