@@ -401,6 +401,46 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================= */
+/* SECTION 4B — SYSTÈME (aperçu Miro verrouillé)                */
+/* ============================================================= */
+.lp-system { padding: 100px 0; }
+.lp-system__wrap {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  aspect-ratio: 16 / 10;
+  min-height: 460px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.lp-system__frame {
+  position: absolute;
+  inset: 0;
+  filter: blur(14px);
+  transform: scale(1.04); /* masque les bords nets du flou */
+  pointer-events: none;
+  transition: filter 0.45s ease, transform 0.45s ease;
+}
+.lp-system__frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.lp-system__frame.is-unlocked { filter: none; transform: none; pointer-events: auto; }
+
+.lp-system__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(5,5,5,0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.lp-system__overlay.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* ============================================================= */
 /* SECTION 4 — BOOKING (gated)                                  */
 /* ============================================================= */
 .lp-booking { padding: 100px 0; }

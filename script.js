@@ -11,7 +11,14 @@
   const wrap      = document.getElementById('calendarWrap');
   const calendar  = document.querySelector('.lp-booking__calendar');
 
+  // Section « système » (aperçu Miro verrouillé)
+  const unlockSystemBtn = document.getElementById('unlockSystemBtn');
+  const systemFrame     = document.getElementById('systemFrame');
+  const systemOverlay   = document.getElementById('systemOverlay');
+  const systemWrap      = document.getElementById('systemWrap');
+
   let lastFocused = null;
+  let unlockTarget = wrap; // vers où scroller après déblocage
 
   // Wrapper sûr : Clarity peut ne pas être chargé (bloqueur de pub, réseau lent).
   function track(name, key, value) {
@@ -84,6 +91,7 @@
         fbq('trackCustom', 'ClickBookCTA', { source: src });
       }
       track('click_cta', 'cta_source', src);
+      unlockTarget = wrap;
       if (wrap && wrap.classList.contains('is-unlocked')) {
         wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else {
@@ -92,7 +100,15 @@
     });
   });
 
-  if (unlockBtn) unlockBtn.addEventListener('click', openModal);
+  if (unlockBtn) unlockBtn.addEventListener('click', function () { unlockTarget = wrap; openModal(); });
+  if (unlockSystemBtn) unlockSystemBtn.addEventListener('click', function () {
+    unlockTarget = systemWrap;
+    if (typeof fbq !== 'undefined') fbq('trackCustom', 'ClickUnlockSystem');
+    track('click_unlock_system', 'gate', 'systeme');
+    // Déjà débloqué ? on ne rouvre pas le form
+    if (systemFrame && systemFrame.classList.contains('is-unlocked')) return;
+    openModal();
+  });
   if (backdrop)  backdrop.addEventListener('click', closeModalFn);
   if (closeBtn)  closeBtn.addEventListener('click', closeModalFn);
 
@@ -149,12 +165,16 @@
           if (typeof fbq !== 'undefined') fbq('track', 'Lead');
           track('lead_submitted', 'lead', 'yes');
           track('calendar_unlocked', 'domaine', payload.domaine || 'non renseigne');
-          if (overlay)  overlay.classList.add('is-hidden');
-          if (calendar) calendar.classList.add('is-unlocked');
-          if (wrap)     wrap.classList.add('is-unlocked');
+          // Déverrouille le calendrier ET l'aperçu du système d'un coup
+          if (overlay)        overlay.classList.add('is-hidden');
+          if (calendar)       calendar.classList.add('is-unlocked');
+          if (wrap)           wrap.classList.add('is-unlocked');
+          if (systemOverlay)  systemOverlay.classList.add('is-hidden');
+          if (systemFrame)    systemFrame.classList.add('is-unlocked');
           closeModalFn();
           setTimeout(() => {
-            if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            var t = unlockTarget || wrap;
+            if (t) t.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }, 300);
         })
         .catch((err) => {
