@@ -418,8 +418,8 @@ a { color: inherit; text-decoration: none; }
 .lp-system__frame {
   position: absolute;
   inset: 0;
-  filter: blur(14px);
-  transform: scale(1.04); /* masque les bords nets du flou */
+  filter: blur(7px);
+  transform: scale(1.03); /* masque les bords nets du flou */
   pointer-events: none;
   transition: filter 0.45s ease, transform 0.45s ease;
 }
