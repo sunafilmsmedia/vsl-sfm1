@@ -13,8 +13,9 @@
 
   // Section « système » (aperçu Miro verrouillé)
   const unlockSystemBtn = document.getElementById('unlockSystemBtn');
-  const systemFrame     = document.getElementById('systemFrame');
+  const systemPoster    = document.getElementById('systemPoster');
   const systemOverlay   = document.getElementById('systemOverlay');
+  const systemOpen      = document.getElementById('systemOpen');
   const systemWrap      = document.getElementById('systemWrap');
 
   let lastFocused = null;
@@ -106,7 +107,7 @@
     if (typeof fbq !== 'undefined') fbq('trackCustom', 'ClickUnlockSystem');
     track('click_unlock_system', 'gate', 'systeme');
     // Déjà débloqué ? on ne rouvre pas le form
-    if (systemFrame && systemFrame.classList.contains('is-unlocked')) return;
+    if (systemPoster && systemPoster.classList.contains('is-clear')) return;
     openModal();
   });
   if (backdrop)  backdrop.addEventListener('click', closeModalFn);
@@ -170,7 +171,8 @@
           if (calendar)       calendar.classList.add('is-unlocked');
           if (wrap)           wrap.classList.add('is-unlocked');
           if (systemOverlay)  systemOverlay.classList.add('is-hidden');
-          if (systemFrame)    systemFrame.classList.add('is-unlocked');
+          if (systemPoster)   systemPoster.classList.add('is-clear');
+          if (systemOpen)     systemOpen.classList.add('is-visible');
           closeModalFn();
           setTimeout(() => {
             var t = unlockTarget || wrap;
