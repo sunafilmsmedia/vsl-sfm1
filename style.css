@@ -301,42 +301,103 @@ a { color: inherit; text-decoration: none; }
 /* SECTION 3 — IMPACT                                           */
 /* ============================================================= */
 .lp-impact { padding: 100px 0; }
-.lp-impact__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  max-width: 900px;
+
+/* ---------- Slider horizontal (scroll-snap + flèches) ---------- */
+.lp-slider {
+  position: relative;
+  max-width: 1100px;
   margin: 0 auto;
+  padding: 0 12px;
 }
-.lp-impact__card {
+.lp-slider__track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 8px 12px 22px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.lp-slider__track::-webkit-scrollbar { display: none; }
+
+.lp-slider__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(16,16,16,0.9);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+  backdrop-filter: blur(4px);
+}
+.lp-slider__arrow:hover { background: var(--brand); border-color: var(--brand); }
+.lp-slider__arrow--prev { left: -6px; }
+.lp-slider__arrow--next { right: -6px; }
+.lp-slider__arrow[disabled] { opacity: 0.25; cursor: default; }
+@media (max-width: 720px) { .lp-slider__arrow { display: none; } }
+
+/* ---------- Carte impact avec photo ---------- */
+.lp-icard {
+  flex: 0 0 268px;
+  scroll-snap-align: center;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,95,0,0.28);
-  border-radius: 16px;
-  padding: 32px;
+  border-radius: 18px;
+  padding: 28px 24px 26px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.25s ease, border-color 0.25s ease;
 }
-.lp-impact__client { font-size: 17px; font-weight: 800; color: #fff; }
-.lp-impact__metric { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dim); }
-.lp-impact__progression {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  margin: 10px 0 6px;
+.lp-icard:hover { transform: translateY(-4px); border-color: rgba(255,95,0,0.55); }
+.lp-icard__photo {
+  width: 92px;
+  height: 92px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid rgba(255,95,0,0.5);
+  margin-bottom: 16px;
 }
-.lp-impact__from { font-size: 28px; color: rgba(255,255,255,0.4); font-weight: 700; }
-.lp-impact__arrow { font-size: 22px; color: var(--brand); }
-.lp-impact__to { font-size: 44px; font-weight: 900; color: #fff; letter-spacing: -0.03em; line-height: 1; }
-.lp-impact__pct {
-  align-self: flex-start;
+.lp-icard__body { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; }
+.lp-icard__name { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
+.lp-icard__metric {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--text-dim);
+}
+.lp-icard__prog {
+  display: flex; align-items: baseline; justify-content: center;
+  gap: 10px; margin: 8px 0 4px;
+}
+.lp-icard__from { font-size: 26px; color: rgba(255,255,255,0.4); font-weight: 700; }
+.lp-icard__arrow { font-size: 20px; color: var(--brand); }
+.lp-icard__to { font-size: 46px; font-weight: 900; color: #fff; letter-spacing: -0.03em; line-height: 1; }
+.lp-icard__single {
+  font-size: 52px; font-weight: 900; color: #fff;
+  letter-spacing: -0.03em; line-height: 1; margin: 10px 0 4px;
+}
+.lp-icard__pct {
   padding: 6px 14px;
   background: rgba(34,197,94,0.14);
   color: var(--success-lt);
   border-radius: 999px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
+}
+.lp-icard__period {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--text-dim); margin-top: 2px;
 }
 
 /* ============================================================= */
@@ -694,7 +755,6 @@ a { color: inherit; text-decoration: none; }
 /* RESPONSIVE                                                   */
 /* ============================================================= */
 @media (max-width: 900px) {
-  .lp-impact__grid { grid-template-columns: 1fr; max-width: 460px; }
   .lp-broker-tile { max-width: calc(50% - 1px); }
 }
 

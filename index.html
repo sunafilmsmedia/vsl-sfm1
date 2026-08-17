@@ -172,44 +172,98 @@
   <section class="lp-impact">
     <div class="lp-container">
       <div class="lp-section-head">
-        <span class="lp-eyebrow">Impact du logiciel AI · mai → juin 2026</span>
+        <span class="lp-eyebrow">Impact du logiciel AI · mai → juillet 2026</span>
         <h2 class="lp-h2">Voici ce que ça donne concrètement.</h2>
       </div>
+    </div>
 
-      <div class="lp-impact__grid">
-        <div class="lp-impact__card">
-          <span class="lp-impact__client">Vyncent Ledoux</span>
-          <span class="lp-impact__metric">Leads qualifiés / mois</span>
-          <div class="lp-impact__progression">
-            <span class="lp-impact__from">20</span>
-            <span class="lp-impact__arrow">→</span>
-            <span class="lp-impact__to">51</span>
-          </div>
-          <span class="lp-impact__pct">+155%</span>
-        </div>
+    <!-- Carousel : défile au glissé (mobile) + flèches (desktop) -->
+    <div class="lp-slider" data-slider>
+      <button type="button" class="lp-slider__arrow lp-slider__arrow--prev" data-prev aria-label="Précédent">‹</button>
+      <div class="lp-slider__track" data-track>
 
-        <div class="lp-impact__card">
-          <span class="lp-impact__client">Elie Ibrahim</span>
-          <span class="lp-impact__metric">Leads qualifiés / mois</span>
-          <div class="lp-impact__progression">
-            <span class="lp-impact__from">19</span>
-            <span class="lp-impact__arrow">→</span>
-            <span class="lp-impact__to">29</span>
+        <!-- Cartes PROGRESSION (avant → après) -->
+        <article class="lp-icard">
+          <img class="lp-icard__photo" src="/assets/images/faces/luis-ribeiro.jpg" alt="Luis Ribeiro" loading="lazy" />
+          <div class="lp-icard__body">
+            <p class="lp-icard__name">Luis Ribeiro</p>
+            <p class="lp-icard__metric">Leads qualifiés / mois</p>
+            <div class="lp-icard__prog">
+              <span class="lp-icard__from">31</span>
+              <span class="lp-icard__arrow">→</span>
+              <span class="lp-icard__to">86</span>
+            </div>
+            <span class="lp-icard__pct">+177%</span>
+            <span class="lp-icard__period">mai → juillet</span>
           </div>
-          <span class="lp-impact__pct">+53%</span>
-        </div>
+        </article>
 
-        <div class="lp-impact__card">
-          <span class="lp-impact__client">Luis Ribeiro</span>
-          <span class="lp-impact__metric">Leads qualifiés / mois</span>
-          <div class="lp-impact__progression">
-            <span class="lp-impact__from">31</span>
-            <span class="lp-impact__arrow">→</span>
-            <span class="lp-impact__to">56</span>
+        <article class="lp-icard">
+          <img class="lp-icard__photo" src="/assets/images/faces/elie-ibrahim.jpg" alt="Elie Ibrahim" loading="lazy" />
+          <div class="lp-icard__body">
+            <p class="lp-icard__name">Elie Ibrahim</p>
+            <p class="lp-icard__metric">Leads qualifiés / mois</p>
+            <div class="lp-icard__prog">
+              <span class="lp-icard__from">19</span>
+              <span class="lp-icard__arrow">→</span>
+              <span class="lp-icard__to">47</span>
+            </div>
+            <span class="lp-icard__pct">+147%</span>
+            <span class="lp-icard__period">mai → juillet</span>
           </div>
-          <span class="lp-impact__pct">+81%</span>
-        </div>
+        </article>
+
+        <article class="lp-icard">
+          <img class="lp-icard__photo" src="/assets/images/faces/vyncent-ledoux.jpg" alt="Vyncent Ledoux" loading="lazy" />
+          <div class="lp-icard__body">
+            <p class="lp-icard__name">Vyncent Ledoux</p>
+            <p class="lp-icard__metric">Leads qualifiés / mois</p>
+            <div class="lp-icard__prog">
+              <span class="lp-icard__from">20</span>
+              <span class="lp-icard__arrow">→</span>
+              <span class="lp-icard__to">51</span>
+            </div>
+            <span class="lp-icard__pct">+155%</span>
+            <span class="lp-icard__period">mai → juin</span>
+          </div>
+        </article>
+
+        <!-- Cartes RÉSULTAT de juillet -->
+        <article class="lp-icard">
+          <img class="lp-icard__photo" src="/assets/images/faces/martin-ross.jpg" alt="Martin Ross" loading="lazy" />
+          <div class="lp-icard__body">
+            <p class="lp-icard__name">Martin Ross</p>
+            <p class="lp-icard__metric">Leads qualifiés</p>
+            <div class="lp-icard__single">66</div>
+            <span class="lp-icard__pct">juillet 2026</span>
+            <span class="lp-icard__period">courtier hypothécaire</span>
+          </div>
+        </article>
+
+        <article class="lp-icard">
+          <img class="lp-icard__photo" src="/assets/images/faces/justin-legault.jpg" alt="Justin Legault" loading="lazy" />
+          <div class="lp-icard__body">
+            <p class="lp-icard__name">Justin Legault</p>
+            <p class="lp-icard__metric">Leads qualifiés</p>
+            <div class="lp-icard__single">24</div>
+            <span class="lp-icard__pct">juillet 2026</span>
+            <span class="lp-icard__period">courtier immobilier</span>
+          </div>
+        </article>
+
+        <article class="lp-icard">
+          <img class="lp-icard__photo" src="/assets/images/faces/sylvain-danis.jpg" alt="Sylvain Danis" loading="lazy" />
+          <div class="lp-icard__body">
+            <p class="lp-icard__name">Sylvain Danis</p>
+            <p class="lp-icard__metric">Leads qualifiés</p>
+            <div class="lp-icard__single">27</div>
+            <span class="lp-icard__pct">juillet 2026</span>
+            <span class="lp-icard__period">courtier</span>
+          </div>
+        </article>
+
       </div>
+      <button type="button" class="lp-slider__arrow lp-slider__arrow--next" data-next aria-label="Suivant">›</button>
     </div>
   </section>
 

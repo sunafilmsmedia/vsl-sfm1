@@ -168,6 +168,33 @@
     });
   }
 
+  // ===== Slider Impact : flèches prev/next =====
+  (function initSliders() {
+    document.querySelectorAll('[data-slider]').forEach(function (slider) {
+      var track = slider.querySelector('[data-track]');
+      var prev  = slider.querySelector('[data-prev]');
+      var next  = slider.querySelector('[data-next]');
+      if (!track) return;
+
+      function step() {
+        var card = track.querySelector('.lp-icard');
+        var gap = 18;
+        return card ? card.offsetWidth + gap : track.clientWidth * 0.8;
+      }
+      function update() {
+        if (!prev || !next) return;
+        var max = track.scrollWidth - track.clientWidth - 2;
+        prev.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft >= max;
+      }
+      if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+      if (next) next.addEventListener('click', function () { track.scrollBy({ left:  step(), behavior: 'smooth' }); });
+      track.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    });
+  })();
+
   // ===== VSL : bouton « Activer le son » =====
   // L'autoplay est imposé muet par les navigateurs. Au 1er clic (geste utilisateur),
   // on réactive le son via l'API YouTube. Fallback : rechargement de l'iframe non-muet.
