@@ -467,6 +467,72 @@ a { color: inherit; text-decoration: none; }
 .lp-system__overlay.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
 /* ============================================================= */
+/* PAGE /rendez-vous — header, hero, FAQ                        */
+/* ============================================================= */
+.lp-rvheader { border-bottom: 1px solid var(--border); padding: 16px 0; }
+.lp-rvheader__inner { display: flex; align-items: center; justify-content: space-between; }
+.lp-rvheader__step {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--brand);
+}
+
+.lp-rvhero { position: relative; overflow: hidden; padding: 64px 0 24px; text-align: center; }
+.lp-rvhero__glow {
+  position: absolute; top: -240px; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 520px; pointer-events: none; z-index: 0;
+  background: radial-gradient(circle, rgba(255,95,0,0.16) 0%, transparent 65%);
+}
+.lp-rvhero .lp-container { position: relative; z-index: 2; }
+.lp-rvhero__title {
+  font-size: clamp(28px, 4.6vw, 46px); font-weight: 900;
+  letter-spacing: -0.03em; line-height: 1.08; margin: 10px 0 14px;
+}
+.lp-rvhero__sub {
+  color: var(--text-muted); max-width: 640px; margin: 0 auto;
+  font-size: clamp(15px, 2vw, 18px); line-height: 1.6;
+}
+
+/* Calendrier « ouvert » (page rendez-vous : pas de gating) */
+.lp-booking__wrap--open { min-height: 0; }
+.lp-booking__wrap--open .lp-booking__calendar { filter: none; pointer-events: auto; }
+
+/* FAQ (accordéon natif <details>) */
+.lp-faq { padding: 50px 0 100px; }
+.lp-faq__list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.lp-faq__item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.lp-faq__item summary {
+  cursor: pointer;
+  padding: 18px 22px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: color 0.2s;
+}
+.lp-faq__item summary::-webkit-details-marker { display: none; }
+.lp-faq__item summary::after {
+  content: '+';
+  color: var(--brand);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.lp-faq__item[open] summary::after { content: '−'; }
+.lp-faq__item summary:hover { color: var(--brand); }
+.lp-faq__item > div { padding: 0 22px 20px; color: var(--text-muted); line-height: 1.65; font-size: 15px; }
+.lp-faq__item > div p { margin: 0; }
+
+/* ============================================================= */
 /* SECTION 4 — BOOKING (gated)                                  */
 /* ============================================================= */
 .lp-booking { padding: 100px 0; }

@@ -165,19 +165,10 @@
         .then(() => {
           if (typeof fbq !== 'undefined') fbq('track', 'Lead');
           track('lead_submitted', 'lead', 'yes');
-          track('calendar_unlocked', 'domaine', payload.domaine || 'non renseigne');
-          // Déverrouille le calendrier ET l'aperçu du système d'un coup
-          if (overlay)        overlay.classList.add('is-hidden');
-          if (calendar)       calendar.classList.add('is-unlocked');
-          if (wrap)           wrap.classList.add('is-unlocked');
-          if (systemOverlay)  systemOverlay.classList.add('is-hidden');
-          if (systemPoster)   systemPoster.classList.add('is-clear');
-          if (systemOpen)     systemOpen.classList.add('is-visible');
+          track('redirect_rendezvous', 'domaine', payload.domaine || 'non renseigne');
           closeModalFn();
-          setTimeout(() => {
-            var t = unlockTarget || wrap;
-            if (t) t.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }, 300);
+          // Redirige vers la page de prise de rendez-vous (calendrier + FAQ + système)
+          setTimeout(function () { window.location.href = '/rendez-vous'; }, 250);
         })
         .catch((err) => {
           console.error(err);
