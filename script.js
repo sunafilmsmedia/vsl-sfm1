@@ -234,6 +234,13 @@
     if (!btn || !iframe) return;
 
     var player = null;
+    var bar = document.getElementById('vslBar');
+    var barStarted = false;
+    function startBar() {
+      if (barStarted || !bar) return;
+      barStarted = true;
+      bar.classList.add('is-running');
+    }
 
     // Charge l'API IFrame YouTube
     var tag = document.createElement('script');
@@ -242,9 +249,18 @@
 
     window.onYouTubeIframeAPIReady = function () {
       try {
-        player = new YT.Player('vslPlayer');
+        player = new YT.Player('vslPlayer', {
+          events: {
+            onStateChange: function (e) {
+              if (e.data === 1) startBar(); // 1 = PLAYING → démarre la barre
+            }
+          }
+        });
       } catch (e) { /* fallback gérera */ }
     };
+
+    // Filet de sécurité : si l'API tarde, on lance la barre après le chargement.
+    window.addEventListener('load', function () { setTimeout(startBar, 1500); });
 
     function hideOverlay() {
       btn.classList.add('is-hidden');
@@ -263,8 +279,9 @@
       // Fallback : recharge la vidéo avec le son actif (le clic autorise l'audio)
       if (!done) {
         var base = 'https://www.youtube.com/embed/QQHwfrj70tM';
-        iframe.src = base + '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1';
+        iframe.src = base + '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=0&disablekb=1&enablejsapi=1';
       }
+      startBar();
       hideOverlay();
       if (typeof fbq !== 'undefined') fbq('trackCustom', 'VideoUnmute');
       track('video_unmuted', 'unmuted', 'yes');

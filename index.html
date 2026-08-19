@@ -92,7 +92,7 @@
       <div class="lp-hero__video">
         <iframe
           id="vslPlayer"
-          src="https://www.youtube.com/embed/QQHwfrj70tM?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1"
+          src="https://www.youtube.com/embed/QQHwfrj70tM?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&controls=0&disablekb=1&enablejsapi=1"
           title="Vidéo de présentation Suna Films Media"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -110,8 +110,11 @@
               <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
             </svg>
           </span>
-          <span class="lp-video-unmute__label">Cliquez pour activer le son</span>
+          <span class="lp-video-unmute__label">▶ Cliquez pour lancer avec le son</span>
         </button>
+
+        <!-- Fausse barre de progression (~20 s) -->
+        <div class="lp-vsl-bar" aria-hidden="true"><span class="lp-vsl-bar__fill" id="vslBar"></span></div>
       </div>
 
       <a href="#booking" class="lp-btn lp-btn--primary lp-btn--lg lp-track-cta" data-cta="hero">
@@ -167,74 +170,6 @@
         <img class="marquee__logo" src="/assets/images/clients/domaine.png" alt="" aria-hidden="true" />
         <img class="marquee__logo" src="/assets/images/clients/don.png" alt="" aria-hidden="true" />
         <img class="marquee__logo" src="/assets/images/agencies/centum.png" alt="" aria-hidden="true" />
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================= -->
-  <!-- SECTION 2B — APPLICATION (form inline)                        -->
-  <!-- ============================================================= -->
-  <section class="lp-apply" id="apply">
-    <div class="lp-container">
-      <div class="lp-apply__card">
-        <span class="lp-eyebrow">Rencontre sans frais — ni obligation</span>
-        <h2 class="lp-apply__title">Applique pour travailler avec nous</h2>
-        <p class="lp-apply__sub">
-          Réponds à 4 questions, puis sélectionne l'heure qui te convient le mieux.
-        </p>
-
-        <form id="leadForm" class="lp-form lp-apply__form" novalidate>
-          <div class="lp-apply__progress"><span class="lp-apply__progress-bar" id="applyBar"></span></div>
-          <p class="lp-apply__count"><span id="applyStepNum">1</span> / 4</p>
-
-          <!-- Étape 1 -->
-          <div class="lp-apply__step is-active" data-step="1">
-            <label for="lead-nom">Quel est ton nom complet&nbsp;?</label>
-            <input type="text" id="lead-nom" name="nom" required autocomplete="name" placeholder="Ton nom" />
-            <button type="button" class="lp-btn lp-btn--primary lp-btn--lg" data-next>Suivant →</button>
-          </div>
-
-          <!-- Étape 2 -->
-          <div class="lp-apply__step" data-step="2">
-            <label for="lead-tel">Ton numéro de téléphone&nbsp;?</label>
-            <input type="tel" id="lead-tel" name="telephone" required autocomplete="tel" placeholder="(514) 000-0000" />
-            <div class="lp-apply__nav">
-              <button type="button" class="lp-apply__back" data-back>← Retour</button>
-              <button type="button" class="lp-btn lp-btn--primary lp-btn--lg" data-next>Suivant →</button>
-            </div>
-          </div>
-
-          <!-- Étape 3 -->
-          <div class="lp-apply__step" data-step="3">
-            <label for="lead-email">Ton courriel&nbsp;?</label>
-            <input type="email" id="lead-email" name="courriel" required autocomplete="email" placeholder="ton@courriel.com" />
-            <div class="lp-apply__nav">
-              <button type="button" class="lp-apply__back" data-back>← Retour</button>
-              <button type="button" class="lp-btn lp-btn--primary lp-btn--lg" data-next>Suivant →</button>
-            </div>
-          </div>
-
-          <!-- Étape 4 : domaine (choix) -->
-          <div class="lp-apply__step" data-step="4">
-            <label>Dans quel domaine tu travailles&nbsp;?</label>
-            <div class="lp-apply__choices">
-              <button type="button" class="lp-apply__choice" data-value="Courtier hypothécaire">Courtier hypothécaire</button>
-              <button type="button" class="lp-apply__choice" data-value="Courtier immobilier">Courtier immobilier</button>
-              <button type="button" class="lp-apply__choice" data-value="Autre">Autre</button>
-            </div>
-            <input type="hidden" name="domaine" id="lead-domaine" />
-            <div class="lp-apply__nav">
-              <button type="button" class="lp-apply__back" data-back>← Retour</button>
-              <button type="submit" class="lp-btn lp-btn--primary lp-btn--lg lp-form__submit">
-                Choisir mon heure →
-              </button>
-            </div>
-          </div>
-
-          <!-- Honeypot anti-spam -->
-          <input type="text" name="website" tabindex="-1" autocomplete="off"
-                 style="position:absolute;left:-9999px" aria-hidden="true" />
-        </form>
       </div>
     </div>
   </section>
@@ -411,43 +346,69 @@
   </section>
 
   <!-- ============================================================= -->
-  <!-- SECTION 5B — GALERIE CLIENTS (tout le monde qu'on a aidé)     -->
+  <!-- SECTION 2B — APPLICATION (form inline)                        -->
   <!-- ============================================================= -->
-  <section class="lp-clients">
+  <section class="lp-apply" id="apply">
     <div class="lp-container">
-      <div class="lp-section-head">
-        <span class="lp-eyebrow">Notre portfolio</span>
-        <h2 class="lp-h2">Tout le monde qu'on a déjà aidé</h2>
-      </div>
+      <div class="lp-apply__card">
+        <span class="lp-eyebrow">Rencontre sans frais — ni obligation</span>
+        <h2 class="lp-apply__title">Applique pour travailler avec nous</h2>
+        <p class="lp-apply__sub">
+          Réponds à 4 questions, puis sélectionne l'heure qui te convient le mieux.
+        </p>
 
-      <div class="lp-clients__grid">
-        <div class="lp-clients__cell"><img src="/assets/images/clients/mr-remax.png" alt="Martin Ross RE/MAX" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/sperano.png" alt="Sperano" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/roux-bachand.png" alt="Roux & Bachand" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/vyncent-ledoux.png" alt="Vyncent Ledoux" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/emmanuel-bouchard.png" alt="Emmanuel Bouchard" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/claudia-menard.png" alt="Claudia Ménard" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/laroche.png" alt="Avec Laroche" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/jimenez.png" alt="Jimenez" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/bardagi.png" alt="Bardagi" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/desantis.svg" alt="Desantis" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/langevin.svg" alt="Langevin Immobilier" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/laura.png" alt="Laura" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/binette-dionne.png" alt="Binette & Dionne" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/beach-day.png" alt="Beach Day" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/domaine.png" alt="Domaine de la Lumière" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/don.png" alt="Le Don de l'Auto" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/brokers/jp-bolduc.png" alt="Jean-Philippe Bolduc" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/brokers/martin-ross.png" alt="Martin Ross" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/brokers/yannick-charette.png" alt="Yannick Charette" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/agencies/multi-prets.png" alt="Multi-Prêts" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/agencies/alliance.png" alt="Alliance Hypothécaire" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/agencies/centum.png" alt="Centum" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/arcand.svg" alt="Arcand" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/elev8.png" alt="ELEV8 Event" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/zolf.png" alt="Zolf" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/priscilla.png" alt="Priscilla Ménard" loading="lazy" /></div>
-        <div class="lp-clients__cell"><img src="/assets/images/clients/tatiana.png" alt="Groupe immobilier Londono" loading="lazy" /></div>
+        <form id="leadForm" class="lp-form lp-apply__form" novalidate>
+          <div class="lp-apply__progress"><span class="lp-apply__progress-bar" id="applyBar"></span></div>
+          <p class="lp-apply__count"><span id="applyStepNum">1</span> / 4</p>
+
+          <!-- Étape 1 -->
+          <div class="lp-apply__step is-active" data-step="1">
+            <label for="lead-nom">Quel est ton nom complet&nbsp;?</label>
+            <input type="text" id="lead-nom" name="nom" required autocomplete="name" placeholder="Ton nom" />
+            <button type="button" class="lp-btn lp-btn--primary lp-btn--lg" data-next>Suivant →</button>
+          </div>
+
+          <!-- Étape 2 -->
+          <div class="lp-apply__step" data-step="2">
+            <label for="lead-tel">Ton numéro de téléphone&nbsp;?</label>
+            <input type="tel" id="lead-tel" name="telephone" required autocomplete="tel" placeholder="(514) 000-0000" />
+            <div class="lp-apply__nav">
+              <button type="button" class="lp-apply__back" data-back>← Retour</button>
+              <button type="button" class="lp-btn lp-btn--primary lp-btn--lg" data-next>Suivant →</button>
+            </div>
+          </div>
+
+          <!-- Étape 3 -->
+          <div class="lp-apply__step" data-step="3">
+            <label for="lead-email">Ton courriel&nbsp;?</label>
+            <input type="email" id="lead-email" name="courriel" required autocomplete="email" placeholder="ton@courriel.com" />
+            <div class="lp-apply__nav">
+              <button type="button" class="lp-apply__back" data-back>← Retour</button>
+              <button type="button" class="lp-btn lp-btn--primary lp-btn--lg" data-next>Suivant →</button>
+            </div>
+          </div>
+
+          <!-- Étape 4 : domaine (choix) -->
+          <div class="lp-apply__step" data-step="4">
+            <label>Dans quel domaine tu travailles&nbsp;?</label>
+            <div class="lp-apply__choices">
+              <button type="button" class="lp-apply__choice" data-value="Courtier hypothécaire">Courtier hypothécaire</button>
+              <button type="button" class="lp-apply__choice" data-value="Courtier immobilier">Courtier immobilier</button>
+              <button type="button" class="lp-apply__choice" data-value="Autre">Autre</button>
+            </div>
+            <input type="hidden" name="domaine" id="lead-domaine" />
+            <div class="lp-apply__nav">
+              <button type="button" class="lp-apply__back" data-back>← Retour</button>
+              <button type="submit" class="lp-btn lp-btn--primary lp-btn--lg lp-form__submit">
+                Choisir mon heure →
+              </button>
+            </div>
+          </div>
+
+          <!-- Honeypot anti-spam -->
+          <input type="text" name="website" tabindex="-1" autocomplete="off"
+                 style="position:absolute;left:-9999px" aria-hidden="true" />
+        </form>
       </div>
     </div>
   </section>
@@ -637,6 +598,48 @@
           <p class="lp-review__text">Super compagnie, vraiment professionnelle ! Leur approche est entièrement personnalisée, contrairement à d'autres entreprises où l'on finit par se sentir comme un simple numéro. Ça fait déjà un an que notre aventure a commencé ensemble, et chaque fois qu'un futur partenaire d'affaires me contacte pour avoir mon avis, je les recommande sans aucune hésitation. Lancez-vous !</p>
         </article>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION 5B — GALERIE CLIENTS (tout le monde qu'on a aidé)     -->
+  <!-- ============================================================= -->
+  <section class="lp-clients">
+    <div class="lp-container">
+      <div class="lp-section-head">
+        <span class="lp-eyebrow">Notre portfolio</span>
+        <h2 class="lp-h2">Tout le monde qu'on a déjà aidé</h2>
+      </div>
+
+      <div class="lp-clients__grid">
+        <div class="lp-clients__cell"><img src="/assets/images/clients/mr-remax.png" alt="Martin Ross RE/MAX" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/sperano.png" alt="Sperano" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/roux-bachand.png" alt="Roux & Bachand" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/vyncent-ledoux.png" alt="Vyncent Ledoux" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/emmanuel-bouchard.png" alt="Emmanuel Bouchard" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/claudia-menard.png" alt="Claudia Ménard" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/laroche.png" alt="Avec Laroche" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/jimenez.png" alt="Jimenez" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/bardagi.png" alt="Bardagi" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/desantis.svg" alt="Desantis" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/langevin.svg" alt="Langevin Immobilier" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/laura.png" alt="Laura" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/binette-dionne.png" alt="Binette & Dionne" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/beach-day.png" alt="Beach Day" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/domaine.png" alt="Domaine de la Lumière" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/don.png" alt="Le Don de l'Auto" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/brokers/jp-bolduc.png" alt="Jean-Philippe Bolduc" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/brokers/martin-ross.png" alt="Martin Ross" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/brokers/yannick-charette.png" alt="Yannick Charette" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/agencies/multi-prets.png" alt="Multi-Prêts" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/agencies/alliance.png" alt="Alliance Hypothécaire" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/agencies/centum.png" alt="Centum" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/arcand.svg" alt="Arcand" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/elev8.png" alt="ELEV8 Event" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/zolf.png" alt="Zolf" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/priscilla.png" alt="Priscilla Ménard" loading="lazy" /></div>
+        <div class="lp-clients__cell"><img src="/assets/images/clients/tatiana.png" alt="Groupe immobilier Londono" loading="lazy" /></div>
       </div>
     </div>
   </section>
