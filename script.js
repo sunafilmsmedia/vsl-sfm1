@@ -3,7 +3,10 @@
 /* ============================================================= */
 (function () {
   const form         = document.getElementById('leadForm');
-  const applySection = document.getElementById('apply');
+  const applyModal   = document.getElementById('applyModal');
+  const applyBackdrop= document.getElementById('applyBackdrop');
+  const applyClose   = document.getElementById('applyClose');
+  let   lastFocused  = null;
 
   // Wrapper sûr : Clarity peut ne pas être chargé (bloqueur de pub, réseau lent).
   function track(name, key, value) {
@@ -51,25 +54,41 @@
     };
   }
 
-  // Amène l'utilisateur au formulaire d'application (sous les logos)
-  function goToApply() {
-    if (!applySection) return;
-    applySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Ouvre / ferme la modal du formulaire d'application
+  function openApplyModal() {
+    if (!applyModal) return;
+    lastFocused = document.activeElement;
+    applyModal.classList.add('is-open');
+    applyModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    if (form && typeof form._stepShow === 'function') form._stepShow(0, false);
     setTimeout(function () {
       var first = form && form.querySelector('input[name="nom"]');
       if (first) { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }
-    }, 500);
+    }, 120);
+  }
+  function closeApplyModal() {
+    if (!applyModal) return;
+    applyModal.classList.remove('is-open');
+    applyModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
   }
 
-  // TOUS les CTAs "Applique pour travailler avec nous" mènent au formulaire
+  // TOUS les CTAs "Applique pour travailler avec nous" ouvrent la modal
   document.querySelectorAll('.lp-track-cta').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       var src = this.dataset.cta || 'unknown';
       if (typeof fbq !== 'undefined') fbq('trackCustom', 'ClickBookCTA', { source: src });
       track('click_cta', 'cta_source', src);
-      goToApply();
+      openApplyModal();
     });
+  });
+  if (applyBackdrop) applyBackdrop.addEventListener('click', closeApplyModal);
+  if (applyClose)    applyClose.addEventListener('click', closeApplyModal);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && applyModal && applyModal.classList.contains('is-open')) closeApplyModal();
   });
 
   // ===== Formulaire multi-étapes (une question à la fois) =====
