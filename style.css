@@ -103,8 +103,15 @@ a { color: inherit; text-decoration: none; }
 }
 
 .lp-btn--lg {
-  padding: 17px 34px;
-  font-size: 17px;
+  padding: 19px 40px;
+  font-size: 18px;
+}
+
+/* CTAs principaux (hero / mid / final) : gros et faciles à cliquer */
+.lp-track-cta.lp-btn--lg {
+  padding: 21px 44px;
+  font-size: 19px;
+  font-weight: 800;
 }
 
 /* ============================================================= */
@@ -166,11 +173,46 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 14px;
 }
 
+.lp-hero__title-accent {
+  display: block;
+  font-size: 0.5em;
+  font-weight: 800;
+  color: var(--brand);
+  letter-spacing: -0.02em;
+  margin-top: 8px;
+  line-height: 1.15;
+}
+
 .lp-hero__guarantee {
   font-size: clamp(15px, 2vw, 20px);
   color: var(--brand);
   font-weight: 700;
   margin-bottom: 18px;
+}
+
+/* Flèche + phrase au-dessus de la vidéo */
+.lp-hero__vsl-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+.lp-hero__vsl-text {
+  font-size: clamp(15px, 2.2vw, 19px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.lp-hero__vsl-arrow {
+  width: 30px;
+  height: 30px;
+  color: var(--brand);
+  animation: vsl-arrow-bounce 1.4s ease-in-out infinite;
+}
+@keyframes vsl-arrow-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(7px); }
 }
 
 .lp-hero__sub {
@@ -1216,6 +1258,14 @@ a { color: inherit; text-decoration: none; }
   .lp-bg-trajectory__bird { width: 60px; }
 
   .lp-footer__inner { flex-direction: column; text-align: center; }
+
+  /* CTAs principaux : pleine largeur + très gros sur mobile (facile à taper) */
+  .lp-track-cta.lp-btn--lg {
+    display: flex;
+    width: 100%;
+    padding: 22px 24px;
+    font-size: 19px;
+  }
 }
 
 /* ---------- Reduced motion ---------- */
