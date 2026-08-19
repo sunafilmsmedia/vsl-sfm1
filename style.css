@@ -845,6 +845,44 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================= */
+/* SECTION 5B — GALERIE CLIENTS                                 */
+/* ============================================================= */
+.lp-clients { padding: 90px 0; }
+.lp-clients__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.lp-clients__cell {
+  background: #050505;
+  min-height: 118px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  transition: background 0.25s ease;
+}
+.lp-clients__cell:hover { background: rgba(255,95,0,0.05); }
+.lp-clients__cell img {
+  max-height: 46px;
+  max-width: 82%;
+  width: auto;
+  opacity: 0.85;
+  transition: opacity 0.25s ease;
+}
+.lp-clients__cell:hover img { opacity: 1; }
+@media (max-width: 640px) {
+  .lp-clients { padding: 60px 0; }
+  .lp-clients__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============================================================= */
 /* SECTION 6 — TESTIMONIALS                                     */
 /* ============================================================= */
 .lp-testimonials { padding: 100px 0; }
