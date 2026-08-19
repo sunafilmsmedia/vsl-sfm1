@@ -2,24 +2,8 @@
 /* SUNA FILMS MEDIA — Landing /ai — comportement                 */
 /* ============================================================= */
 (function () {
-  const unlockBtn = document.getElementById('unlockBtn');
-  const modal     = document.getElementById('leadModal');
-  const backdrop  = document.getElementById('modalBackdrop');
-  const closeBtn  = document.getElementById('closeModal');
-  const form      = document.getElementById('leadForm');
-  const overlay   = document.getElementById('lockOverlay');
-  const wrap      = document.getElementById('calendarWrap');
-  const calendar  = document.querySelector('.lp-booking__calendar');
-
-  // Section « système » (aperçu Miro verrouillé)
-  const unlockSystemBtn = document.getElementById('unlockSystemBtn');
-  const systemPoster    = document.getElementById('systemPoster');
-  const systemOverlay   = document.getElementById('systemOverlay');
-  const systemOpen      = document.getElementById('systemOpen');
-  const systemWrap      = document.getElementById('systemWrap');
-
-  let lastFocused = null;
-  let unlockTarget = wrap; // vers où scroller après déblocage
+  const form         = document.getElementById('leadForm');
+  const applySection = document.getElementById('apply');
 
   // Wrapper sûr : Clarity peut ne pas être chargé (bloqueur de pub, réseau lent).
   function track(name, key, value) {
@@ -67,54 +51,25 @@
     };
   }
 
-  function openModal() {
-    lastFocused = document.activeElement;
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-    setTimeout(() => {
-      const first = form.querySelector('input[name="nom"]');
-      if (first) first.focus();
-    }, 100);
+  // Amène l'utilisateur au formulaire d'application (sous les logos)
+  function goToApply() {
+    if (!applySection) return;
+    applySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(function () {
+      var first = form && form.querySelector('input[name="nom"]');
+      if (first) { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }
+    }, 500);
   }
 
-  function closeModalFn() {
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
-  }
-
-  // TOUS les CTAs "Prendre mon rendez-vous" ouvrent le form d'abord
-  document.querySelectorAll('.lp-track-cta').forEach((btn) => {
+  // TOUS les CTAs "Applique pour travailler avec nous" mènent au formulaire
+  document.querySelectorAll('.lp-track-cta').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       var src = this.dataset.cta || 'unknown';
-      if (typeof fbq !== 'undefined') {
-        fbq('trackCustom', 'ClickBookCTA', { source: src });
-      }
+      if (typeof fbq !== 'undefined') fbq('trackCustom', 'ClickBookCTA', { source: src });
       track('click_cta', 'cta_source', src);
-      unlockTarget = wrap;
-      if (wrap && wrap.classList.contains('is-unlocked')) {
-        wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else {
-        openModal();
-      }
+      goToApply();
     });
-  });
-
-  if (unlockBtn) unlockBtn.addEventListener('click', function () { unlockTarget = wrap; openModal(); });
-  if (unlockSystemBtn) unlockSystemBtn.addEventListener('click', function () {
-    unlockTarget = systemWrap;
-    if (typeof fbq !== 'undefined') fbq('trackCustom', 'ClickUnlockSystem');
-    track('click_unlock_system', 'gate', 'systeme');
-    // Déjà débloqué ? on ne rouvre pas le form
-    if (systemPoster && systemPoster.classList.contains('is-clear')) return;
-    openModal();
-  });
-  if (backdrop)  backdrop.addEventListener('click', closeModalFn);
-  if (closeBtn)  closeBtn.addEventListener('click', closeModalFn);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModalFn();
   });
 
   // Submit du form → serverless function Vercel → GHL + email
@@ -165,10 +120,14 @@
         .then(() => {
           if (typeof fbq !== 'undefined') fbq('track', 'Lead');
           track('lead_submitted', 'lead', 'yes');
-          track('redirect_rendezvous', 'domaine', payload.domaine || 'non renseigne');
-          closeModalFn();
-          // Redirige vers la page de prise de rendez-vous (calendrier + FAQ + système)
-          setTimeout(function () { window.location.href = '/rendez-vous'; }, 250);
+          // Redirige vers le calendrier en passant les infos pour pré-remplir la réservation
+          var qp = new URLSearchParams();
+          qp.set('name', payload.nom);
+          qp.set('email', payload.courriel);
+          qp.set('phone', payload.telephone);
+          setTimeout(function () {
+            window.location.href = '/rendez-vous?' + qp.toString();
+          }, 250);
         })
         .catch((err) => {
           console.error(err);

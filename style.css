@@ -337,6 +337,36 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================= */
+/* SECTION 2B — APPLICATION (form inline)                       */
+/* ============================================================= */
+.lp-apply { padding: 80px 0; }
+.lp-apply__card {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid rgba(255,95,0,0.28);
+  border-radius: 18px;
+  padding: 40px 34px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+}
+.lp-apply__title {
+  font-size: clamp(24px, 3.6vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  margin: 4px 0 10px;
+}
+.lp-apply__sub {
+  color: var(--text-muted);
+  font-size: clamp(14px, 2vw, 16px);
+  line-height: 1.55;
+  margin-bottom: 26px;
+}
+.lp-apply__form { text-align: left; }
+.lp-apply__form .lp-form__submit { margin-top: 6px; }
+
+/* ============================================================= */
 /* SECTION 3 — IMPACT                                           */
 /* ============================================================= */
 .lp-impact { padding: 100px 0; }

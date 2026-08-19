@@ -172,6 +172,44 @@
   </section>
 
   <!-- ============================================================= -->
+  <!-- SECTION 2B — APPLICATION (form inline)                        -->
+  <!-- ============================================================= -->
+  <section class="lp-apply" id="apply">
+    <div class="lp-container">
+      <div class="lp-apply__card">
+        <span class="lp-eyebrow">Rencontre sans frais — ni obligation</span>
+        <h2 class="lp-apply__title">Applique pour travailler avec nous</h2>
+        <p class="lp-apply__sub">
+          Réponds à 3 questions, puis sélectionne l'heure qui te convient le mieux.
+        </p>
+
+        <form id="leadForm" class="lp-form lp-apply__form" novalidate>
+          <div class="lp-form__field">
+            <label for="lead-nom">Nom complet *</label>
+            <input type="text" id="lead-nom" name="nom" required autocomplete="name" />
+          </div>
+          <div class="lp-form__field">
+            <label for="lead-tel">Téléphone *</label>
+            <input type="tel" id="lead-tel" name="telephone" required autocomplete="tel" />
+          </div>
+          <div class="lp-form__field">
+            <label for="lead-email">Courriel *</label>
+            <input type="email" id="lead-email" name="courriel" required autocomplete="email" />
+          </div>
+
+          <!-- Honeypot anti-spam -->
+          <input type="text" name="website" tabindex="-1" autocomplete="off"
+                 style="position:absolute;left:-9999px" aria-hidden="true" />
+
+          <button type="submit" class="lp-btn lp-btn--primary lp-btn--lg lp-form__submit">
+            Choisir mon heure →
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
   <!-- SECTION 3 — IMPACT DU AI (stats)                              -->
   <!-- ============================================================= -->
   <section class="lp-impact">
@@ -562,50 +600,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- ============================================================= -->
-  <!-- MODAL FORMULAIRE                                              -->
-  <!-- ============================================================= -->
-  <div class="lp-modal" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle" aria-hidden="true">
-    <div class="lp-modal__backdrop" id="modalBackdrop"></div>
-    <div class="lp-modal__box">
-      <button type="button" class="lp-modal__close" id="closeModal" aria-label="Fermer">×</button>
-      <h3 id="leadModalTitle">On a besoin de 3 infos rapides</h3>
-      <p>Après ça, tu accèdes directement au calendrier.</p>
-
-      <form id="leadForm" class="lp-form" novalidate>
-        <div class="lp-form__field">
-          <label for="lead-nom">Nom complet *</label>
-          <input type="text" id="lead-nom" name="nom" required autocomplete="name" />
-        </div>
-        <div class="lp-form__field">
-          <label for="lead-tel">Téléphone *</label>
-          <input type="tel" id="lead-tel" name="telephone" required autocomplete="tel" />
-        </div>
-        <div class="lp-form__field">
-          <label for="lead-email">Courriel *</label>
-          <input type="email" id="lead-email" name="courriel" required autocomplete="email" />
-        </div>
-        <div class="lp-form__field">
-          <label for="lead-domaine">Ton domaine *</label>
-          <select id="lead-domaine" name="domaine" required>
-            <option value="">Sélectionne…</option>
-            <option value="Courtier hypothécaire">Courtier hypothécaire</option>
-            <option value="Courtier immobilier">Courtier immobilier</option>
-            <option value="Autre">Autre</option>
-          </select>
-        </div>
-
-        <!-- Honeypot anti-spam -->
-        <input type="text" name="website" tabindex="-1" autocomplete="off"
-               style="position:absolute;left:-9999px" aria-hidden="true" />
-
-        <button type="submit" class="lp-btn lp-btn--primary lp-btn--lg lp-form__submit">
-          Voir le calendrier →
-        </button>
-      </form>
-    </div>
-  </div>
 
   <!-- Script d'embed GoHighLevel : redimensionne le widget de réservation -->
   <script src="https://link.msgsndr.com/js/form_embed.js"></script>

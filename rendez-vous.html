@@ -86,6 +86,29 @@
     </div>
   </section>
 
+  <!-- Pré-remplit le widget GHL avec les infos saisies sur la page principale -->
+  <script>
+    (function () {
+      try {
+        var p = new URLSearchParams(location.search);
+        var iframe = document.getElementById('ghlBooking');
+        if (!iframe) return;
+        var name = (p.get('name') || '').trim();
+        var parts = name.split(/\s+/);
+        var first = parts.shift() || '';
+        var last = parts.join(' ');
+        var qs = [];
+        if (first) qs.push('first_name=' + encodeURIComponent(first));
+        if (last)  qs.push('last_name=' + encodeURIComponent(last));
+        if (p.get('email')) qs.push('email=' + encodeURIComponent(p.get('email')));
+        if (p.get('phone')) qs.push('phone=' + encodeURIComponent(p.get('phone')));
+        if (qs.length) {
+          iframe.src = 'https://api.leadconnectorhq.com/widget/booking/SUZpHLDFesSyKJdqzXlI?' + qs.join('&');
+        }
+      } catch (e) { /* pré-remplissage best-effort */ }
+    })();
+  </script>
+
   <!-- FAQ -->
   <section class="lp-faq">
     <div class="lp-container">
