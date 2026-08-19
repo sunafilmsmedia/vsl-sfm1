@@ -184,26 +184,56 @@
         </p>
 
         <form id="leadForm" class="lp-form lp-apply__form" novalidate>
-          <div class="lp-form__field">
-            <label for="lead-nom">Nom complet *</label>
-            <input type="text" id="lead-nom" name="nom" required autocomplete="name" />
+          <div class="lp-apply__progress"><span class="lp-apply__progress-bar" id="applyBar"></span></div>
+          <p class="lp-apply__count"><span id="applyStepNum">1</span> / 4</p>
+
+          <!-- Étape 1 -->
+          <div class="lp-apply__step is-active" data-step="1">
+            <label for="lead-nom">Quel est ton nom complet&nbsp;?</label>
+            <input type="text" id="lead-nom" name="nom" required autocomplete="name" placeholder="Ton nom" />
+            <button type="button" class="lp-btn lp-btn--primary lp-btn--lg" data-next>Suivant →</button>
           </div>
-          <div class="lp-form__field">
-            <label for="lead-tel">Téléphone *</label>
-            <input type="tel" id="lead-tel" name="telephone" required autocomplete="tel" />
+
+          <!-- Étape 2 -->
+          <div class="lp-apply__step" data-step="2">
+            <label for="lead-tel">Ton numéro de téléphone&nbsp;?</label>
+            <input type="tel" id="lead-tel" name="telephone" required autocomplete="tel" placeholder="(514) 000-0000" />
+            <div class="lp-apply__nav">
+              <button type="button" class="lp-apply__back" data-back>← Retour</button>
+              <button type="button" class="lp-btn lp-btn--primary lp-btn--lg" data-next>Suivant →</button>
+            </div>
           </div>
-          <div class="lp-form__field">
-            <label for="lead-email">Courriel *</label>
-            <input type="email" id="lead-email" name="courriel" required autocomplete="email" />
+
+          <!-- Étape 3 -->
+          <div class="lp-apply__step" data-step="3">
+            <label for="lead-email">Ton courriel&nbsp;?</label>
+            <input type="email" id="lead-email" name="courriel" required autocomplete="email" placeholder="ton@courriel.com" />
+            <div class="lp-apply__nav">
+              <button type="button" class="lp-apply__back" data-back>← Retour</button>
+              <button type="button" class="lp-btn lp-btn--primary lp-btn--lg" data-next>Suivant →</button>
+            </div>
+          </div>
+
+          <!-- Étape 4 : domaine (choix) -->
+          <div class="lp-apply__step" data-step="4">
+            <label>Dans quel domaine tu travailles&nbsp;?</label>
+            <div class="lp-apply__choices">
+              <button type="button" class="lp-apply__choice" data-value="Courtier hypothécaire">Courtier hypothécaire</button>
+              <button type="button" class="lp-apply__choice" data-value="Courtier immobilier">Courtier immobilier</button>
+              <button type="button" class="lp-apply__choice" data-value="Autre">Autre</button>
+            </div>
+            <input type="hidden" name="domaine" id="lead-domaine" />
+            <div class="lp-apply__nav">
+              <button type="button" class="lp-apply__back" data-back>← Retour</button>
+              <button type="submit" class="lp-btn lp-btn--primary lp-btn--lg lp-form__submit">
+                Choisir mon heure →
+              </button>
+            </div>
           </div>
 
           <!-- Honeypot anti-spam -->
           <input type="text" name="website" tabindex="-1" autocomplete="off"
                  style="position:absolute;left:-9999px" aria-hidden="true" />
-
-          <button type="submit" class="lp-btn lp-btn--primary lp-btn--lg lp-form__submit">
-            Choisir mon heure →
-          </button>
         </form>
       </div>
     </div>

@@ -366,6 +366,100 @@ a { color: inherit; text-decoration: none; }
 .lp-apply__form { text-align: left; }
 .lp-apply__form .lp-form__submit { margin-top: 6px; }
 
+/* Barre de progression */
+.lp-apply__progress {
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.lp-apply__progress-bar {
+  display: block;
+  height: 100%;
+  width: 25%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #FF5F00, #E85400);
+  transition: width 0.35s ease;
+}
+.lp-apply__count {
+  text-align: right;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+/* Étapes (une à la fois) */
+.lp-apply__step { display: none; }
+.lp-apply__step.is-active { display: block; animation: step-in 0.3s ease; }
+@keyframes step-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.lp-apply__step > label {
+  display: block;
+  font-size: clamp(17px, 2.4vw, 21px);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+.lp-apply__step input:not([type=hidden]) {
+  width: 100%;
+  background: #050505;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 15px 16px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  margin-bottom: 18px;
+  transition: border-color 0.2s ease;
+}
+.lp-apply__step input:not([type=hidden]):focus { outline: none; border-color: var(--brand); }
+.lp-apply__step .lp-btn { width: 100%; }
+
+/* Navigation retour / suivant */
+.lp-apply__nav { display: flex; align-items: center; gap: 12px; }
+.lp-apply__nav .lp-btn { flex: 1 1 auto; }
+.lp-apply__back {
+  flex: 0 0 auto;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 4px;
+  transition: color 0.2s;
+}
+.lp-apply__back:hover { color: #fff; }
+
+/* Choix (domaine) */
+.lp-apply__choices { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.lp-apply__choices.is-error .lp-apply__choice { border-color: var(--danger); }
+.lp-apply__choice {
+  width: 100%;
+  text-align: left;
+  background: #050505;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 15px 18px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.lp-apply__choice:hover { border-color: rgba(255,95,0,0.5); }
+.lp-apply__choice.is-selected {
+  border-color: var(--brand);
+  background: rgba(255,95,0,0.12);
+}
+
 /* ============================================================= */
 /* SECTION 3 — IMPACT                                           */
 /* ============================================================= */

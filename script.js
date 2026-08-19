@@ -72,6 +72,57 @@
     });
   });
 
+  // ===== Formulaire multi-étapes (une question à la fois) =====
+  (function initSteps() {
+    if (!form) return;
+    var steps = Array.prototype.slice.call(form.querySelectorAll('.lp-apply__step'));
+    if (!steps.length) return;
+    var bar = document.getElementById('applyBar');
+    var num = document.getElementById('applyStepNum');
+    var domaineInput = document.getElementById('lead-domaine');
+    var cur = 0;
+
+    function show(i, focus) {
+      steps.forEach(function (s, idx) { s.classList.toggle('is-active', idx === i); });
+      cur = i;
+      if (bar) bar.style.width = ((i + 1) / steps.length * 100) + '%';
+      if (num) num.textContent = (i + 1);
+      if (focus !== false) {
+        var inp = steps[i].querySelector('input:not([type=hidden])');
+        setTimeout(function () { if (inp) { try { inp.focus({ preventScroll: true }); } catch (e) { inp.focus(); } } }, 80);
+      }
+    }
+    function validCurrent() {
+      var inp = steps[cur].querySelector('input:not([type=hidden])');
+      if (inp && !inp.checkValidity()) { inp.reportValidity(); return false; }
+      return true;
+    }
+    form.querySelectorAll('[data-next]').forEach(function (btn) {
+      btn.addEventListener('click', function () { if (validCurrent() && cur < steps.length - 1) show(cur + 1); });
+    });
+    form.querySelectorAll('[data-back]').forEach(function (btn) {
+      btn.addEventListener('click', function () { if (cur > 0) show(cur - 1); });
+    });
+    // Choix du domaine
+    form.querySelectorAll('.lp-apply__choice').forEach(function (c) {
+      c.addEventListener('click', function () {
+        form.querySelectorAll('.lp-apply__choice').forEach(function (x) { x.classList.remove('is-selected'); });
+        c.classList.add('is-selected');
+        if (domaineInput) domaineInput.value = c.dataset.value || '';
+      });
+    });
+    // Entrée = étape suivante (sauf dernière)
+    form.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && cur < steps.length - 1) {
+        e.preventDefault();
+        if (validCurrent()) show(cur + 1);
+      }
+    });
+    // expose pour le handler submit
+    form._stepShow = show;
+    show(0, false);
+  })();
+
   // Submit du form → serverless function Vercel → GHL + email
   if (form) {
     form.addEventListener('submit', function (e) {
@@ -80,6 +131,13 @@
       // Validation native (novalidate sur le form → on déclenche manuellement)
       if (!form.checkValidity()) {
         form.reportValidity();
+        return;
+      }
+      // Le domaine (étape 4) doit être choisi
+      var domaineEl = document.getElementById('lead-domaine');
+      if (domaineEl && !domaineEl.value) {
+        var choices = form.querySelector('.lp-apply__choices');
+        if (choices) choices.classList.add('is-error');
         return;
       }
 
