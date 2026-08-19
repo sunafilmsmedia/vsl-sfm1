@@ -128,11 +128,13 @@ a { color: inherit; text-decoration: none; }
 
 .lp-hero__inner { position: relative; z-index: 2; }
 
+/* Le compteur et l'eyebrow sur des lignes séparées (l'eyebrow passe dessous) */
+.lp-hero__inner > .lp-eyebrow { display: block; }
 .lp-hero__scarcity {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   padding: 8px 16px;
   border-radius: 999px;
   background: rgba(255,95,0,0.1);
