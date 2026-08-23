@@ -13,6 +13,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://api.leadconnectorhq.com" />
   <link rel="preconnect" href="https://link.msgsndr.com" />
+  <link rel="preconnect" href="https://www.youtube.com" />
+  <link rel="preconnect" href="https://i.ytimg.com" />
 
   <link rel="stylesheet" href="/style.css" />
 
@@ -63,9 +65,36 @@
       <span class="lp-eyebrow">✓ Tes infos sont enregistrées</span>
       <h1 class="lp-rvhero__title">Réserve ton appel stratégique gratuit</h1>
       <p class="lp-rvhero__sub">
-        30 minutes. Aucun engagement. On te montre exactement comment atteindre
-        30 rendez-vous qualifiés. Choisis ton créneau ci-dessous.
+        30 minutes. Aucun engagement. Regarde la vidéo ci-dessous, puis choisis ton créneau.
       </p>
+    </div>
+  </section>
+
+  <!-- VIDÉO (VSL) -->
+  <section class="lp-rvvideo">
+    <div class="lp-container">
+      <div class="lp-hero__video">
+        <iframe
+          id="vslPlayer"
+          src="https://www.youtube.com/embed/QQHwfrj70tM?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&controls=0&disablekb=1&enablejsapi=1"
+          title="Vidéo de présentation Suna Films Media"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          loading="eager"
+          allowfullscreen>
+        </iframe>
+        <button type="button" class="lp-video-unmute" id="unmuteBtn" aria-label="Activer le son de la vidéo">
+          <span class="lp-video-unmute__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          </span>
+          <span class="lp-video-unmute__label">▶ Cliquez pour lancer avec le son</span>
+        </button>
+        <div class="lp-vsl-bar" aria-hidden="true"><span class="lp-vsl-bar__fill" id="vslBar"></span></div>
+      </div>
     </div>
   </section>
 
@@ -207,6 +236,37 @@
           if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
           if (typeof clarity !== 'undefined') { try { clarity('event', 'booking_scheduled'); } catch (x) {} }
         }
+      });
+    })();
+  </script>
+
+  <!-- VSL : bouton son + fausse barre 20 s -->
+  <script>
+    (function () {
+      var btn = document.getElementById('unmuteBtn');
+      var iframe = document.getElementById('vslPlayer');
+      var bar = document.getElementById('vslBar');
+      if (!btn || !iframe) return;
+      var player = null, barStarted = false;
+      function startBar() { if (barStarted || !bar) return; barStarted = true; bar.classList.add('is-running'); }
+      var tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+      window.onYouTubeIframeAPIReady = function () {
+        try { player = new YT.Player('vslPlayer', { events: { onStateChange: function (e) { if (e.data === 1) startBar(); } } }); } catch (e) {}
+      };
+      window.addEventListener('load', function () { setTimeout(startBar, 1500); });
+      btn.addEventListener('click', function () {
+        var done = false;
+        if (player && typeof player.unMute === 'function') {
+          try { player.unMute(); player.setVolume(100); player.playVideo(); done = true; } catch (e) {}
+        }
+        if (!done) {
+          iframe.src = 'https://www.youtube.com/embed/QQHwfrj70tM?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=0&disablekb=1&enablejsapi=1';
+        }
+        startBar();
+        btn.classList.add('is-hidden');
+        if (typeof fbq !== 'undefined') fbq('trackCustom', 'VideoUnmute');
       });
     })();
   </script>
