@@ -236,16 +236,20 @@ a { color: inherit; text-decoration: none; }
     transparent 78%);
   background-size: 260% 100%;
   filter: blur(30px);
-  opacity: 0.9;
-  animation: video-swish 2.4s linear infinite;
+  opacity: 0;
+  /* 1 balayage (~2,4 s) puis invisible jusqu'au prochain cycle : 1 fois / 30 s */
+  animation: video-swish 30s linear infinite;
   pointer-events: none;
 }
 @keyframes video-swish {
-  0%   { background-position: 135% 0; }
-  100% { background-position: -135% 0; }
+  0%    { background-position: 135% 0;  opacity: 0; }
+  1%    { opacity: 0.9; }
+  8%    { background-position: -135% 0; opacity: 0.9; }
+  9%    { opacity: 0; }
+  100%  { background-position: -135% 0; opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .lp-video-swish { animation: none; background-position: 50% 0; opacity: 0.5; }
+  .lp-video-swish { animation: none; opacity: 0; }
 }
 
 .lp-hero__video {
