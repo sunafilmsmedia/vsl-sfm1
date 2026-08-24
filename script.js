@@ -272,11 +272,36 @@
 
     var player = null;
     var bar = document.getElementById('vslBar');
-    var barStarted = false;
+    var barTimer = null;
+    // Barre "fake" pilotée par la durée réelle :
+    //  - atteint 50 % en 30 s (temps réel écoulé)
+    //  - puis progresse normalement jusqu'à la fin de la vidéo
     function startBar() {
-      if (barStarted || !bar) return;
-      barStarted = true;
-      bar.classList.add('is-running');
+      if (barTimer || !bar) return;
+      bar.style.transition = 'width 0.25s linear';
+      barTimer = setInterval(function () {
+        if (!player || typeof player.getCurrentTime !== 'function') return;
+        var dur = 0, cur = 0, rate = 1.2;
+        try {
+          dur  = player.getDuration()     || 0;
+          cur  = player.getCurrentTime()  || 0;
+          rate = player.getPlaybackRate() || 1.2;
+        } catch (e) { return; }
+        if (dur <= 0) return; // métadonnées pas encore prêtes
+        var wallElapsed = cur / rate;   // secondes réelles écoulées
+        var wallTotal   = dur / rate;   // durée réelle de lecture
+        var pct;
+        if (wallTotal <= 30) {
+          pct = (wallElapsed / wallTotal) * 100;
+        } else if (wallElapsed <= 30) {
+          pct = (wallElapsed / 30) * 50;                       // 0 → 50 % en 30 s
+        } else {
+          pct = 50 + ((wallElapsed - 30) / (wallTotal - 30)) * 50; // 50 → 100 % ensuite
+        }
+        pct = Math.max(0, Math.min(100, pct));
+        bar.style.width = pct + '%';
+        if (pct >= 100) { clearInterval(barTimer); barTimer = null; }
+      }, 200);
     }
 
     // Charge l'API IFrame YouTube
