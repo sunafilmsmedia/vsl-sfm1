@@ -194,6 +194,26 @@ a { color: inherit; text-decoration: none; }
 }
 .lp-hero__hl { color: var(--brand); }
 
+/* CTA sur 2 lignes (texte principal + sous-texte) */
+.lp-cta-stack {
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 17px;
+  padding-bottom: 17px;
+  line-height: 1.15;
+}
+.lp-cta-stack__main { font-size: 19px; font-weight: 800; }
+.lp-cta-stack__sub { font-size: 13px; font-weight: 600; opacity: 0.88; }
+
+/* Ligne de réassurance sous le CTA */
+.lp-hero__reassure {
+  margin-top: 16px;
+  font-size: clamp(13px, 1.7vw, 15px);
+  font-style: italic;
+  color: var(--text-dim);
+}
+.lp-hero__reassure strong { color: #fff; font-style: normal; }
+
 /* Ligne de confiance sous le sous-titre */
 .lp-hero__trust {
   margin-top: 14px;
@@ -1349,8 +1369,10 @@ a { color: inherit; text-decoration: none; }
   .lp-bg-trajectory__bird { opacity: 0.14; }
 }
 
-/* Titre "hook" plus compact sur mobile (override de la règle mobile générique) */
+/* Titre "hook" dominant sur mobile (style VSL) : gros, gras, serré */
 @media (max-width: 640px) {
-  .lp-hero__title--hook { font-size: clamp(21px, 6vw, 30px); line-height: 1.22; }
-  .lp-hero__trust { margin-top: 10px; }
+  .lp-hero { padding-top: 24px; }
+  .lp-hero__title--hook { font-size: clamp(29px, 8vw, 40px); line-height: 1.08; font-weight: 900; letter-spacing: -0.03em; }
+  .lp-hero__sub { font-size: 16px; margin-bottom: 26px; }
+  .lp-hero__vsl-text { font-size: 18px; }
 }
