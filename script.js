@@ -288,8 +288,14 @@
       try {
         player = new YT.Player('vslPlayer', {
           events: {
+            onReady: function (e) {
+              try { e.target.setPlaybackRate(1.2); } catch (x) {} // lecture ×1.2
+            },
             onStateChange: function (e) {
-              if (e.data === 1) startBar(); // 1 = PLAYING → démarre la barre
+              if (e.data === 1) { // PLAYING
+                startBar();
+                try { e.target.setPlaybackRate(1.2); } catch (x) {} // re-force ×1.2
+              }
             }
           }
         });
