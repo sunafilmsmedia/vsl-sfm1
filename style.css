@@ -1348,3 +1348,9 @@ a { color: inherit; text-decoration: none; }
   .lp-bg-trajectory path { stroke-dashoffset: 0; }
   .lp-bg-trajectory__bird { opacity: 0.14; }
 }
+
+/* Titre "hook" plus compact sur mobile (override de la règle mobile générique) */
+@media (max-width: 640px) {
+  .lp-hero__title--hook { font-size: clamp(21px, 6vw, 30px); line-height: 1.22; }
+  .lp-hero__trust { margin-top: 10px; }
+}
