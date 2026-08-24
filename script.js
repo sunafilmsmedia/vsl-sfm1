@@ -197,14 +197,32 @@
         .then(() => {
           if (typeof fbq !== 'undefined') fbq('track', 'Lead');
           track('lead_submitted', 'lead', 'yes');
-          // Redirige vers le calendrier en passant les infos pour pré-remplir la réservation
-          var qp = new URLSearchParams();
-          qp.set('name', payload.nom);
-          qp.set('email', payload.courriel);
-          qp.set('phone', payload.telephone);
+          track('calendar_unlocked', 'domaine', payload.domaine || 'non renseigne');
+
+          // Pré-remplit le widget GHL avec les infos saisies
+          var iframe = document.getElementById('ghlBooking');
+          if (iframe) {
+            var parts = (payload.nom || '').trim().split(/\s+/);
+            var first = parts.shift() || '';
+            var last = parts.join(' ');
+            var qs = [];
+            if (first) qs.push('first_name=' + encodeURIComponent(first));
+            if (last)  qs.push('last_name=' + encodeURIComponent(last));
+            if (payload.courriel)  qs.push('email=' + encodeURIComponent(payload.courriel));
+            if (payload.telephone) qs.push('phone=' + encodeURIComponent(payload.telephone));
+            iframe.src = 'https://api.leadconnectorhq.com/widget/booking/SUZpHLDFesSyKJdqzXlI' + (qs.length ? '?' + qs.join('&') : '');
+          }
+
+          // Déverrouille le calendrier sur la page
+          var cal     = document.querySelector('.lp-booking__calendar');
+          var overlay = document.getElementById('lockOverlay');
+          var wrap    = document.getElementById('calendarWrap');
+          if (cal)     cal.classList.add('is-unlocked');
+          if (overlay) overlay.classList.add('is-hidden');
+          closeApplyModal();
           setTimeout(function () {
-            window.location.href = '/rendez-vous?' + qp.toString();
-          }, 250);
+            if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 350);
         })
         .catch((err) => {
           console.error(err);
