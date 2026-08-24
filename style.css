@@ -183,6 +183,26 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.15;
 }
 
+/* Titre "hook" (phrase complète) : plus petit et lisible que le titre géant */
+.lp-hero__title--hook {
+  font-size: clamp(25px, 4.1vw, 42px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  max-width: 860px;
+  margin: 0 auto 16px;
+}
+.lp-hero__hl { color: var(--brand); }
+
+/* Ligne de confiance sous le sous-titre */
+.lp-hero__trust {
+  margin-top: 14px;
+  font-size: clamp(13px, 1.7vw, 15px);
+  color: var(--text-dim);
+  letter-spacing: 0.01em;
+}
+.lp-hero__trust strong { color: #fff; }
+
 .lp-hero__guarantee {
   font-size: clamp(15px, 2vw, 20px);
   color: var(--brand);
