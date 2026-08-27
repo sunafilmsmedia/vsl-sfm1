@@ -312,6 +312,52 @@ a { color: inherit; text-decoration: none; }
   border: 0;
 }
 
+/* Miniature cliquable (facade) */
+.lp-video-facade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.lp-video-facade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.10);
+  transition: background 0.2s ease;
+}
+.lp-video-facade:hover::after { background: rgba(0,0,0,0); }
+.lp-video-facade__play {
+  position: relative;
+  z-index: 1;
+  width: 82px;
+  height: 82px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #FF5F00 0%, #E85400 100%);
+  box-shadow: 0 14px 36px rgba(255,95,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  animation: facade-pulse 2s ease-in-out infinite;
+}
+.lp-video-facade:hover .lp-video-facade__play { transform: scale(1.07); }
+.lp-video-facade__play svg { width: 36px; height: 36px; color: #fff; margin-left: 4px; }
+@keyframes facade-pulse {
+  0%, 100% { box-shadow: 0 14px 36px rgba(255,95,0,0.5); }
+  50%      { box-shadow: 0 16px 46px rgba(255,95,0,0.7); }
+}
+
 /* Overlay « Activer le son » — couvre la vidéo tant qu'elle est muette */
 .lp-video-unmute {
   position: absolute;

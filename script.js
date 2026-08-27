@@ -262,97 +262,52 @@
     });
   })();
 
-  // ===== VSL : bouton « Activer le son » =====
-  // L'autoplay est imposé muet par les navigateurs. Au 1er clic (geste utilisateur),
-  // on réactive le son via l'API YouTube. Fallback : rechargement de l'iframe non-muet.
-  (function initUnmute() {
-    var btn = document.getElementById('unmuteBtn');
-    var iframe = document.getElementById('vslPlayer');
-    if (!btn || !iframe) return;
+  // ===== VSL : miniature → lecture au clic (pas d'autoplay) =====
+  (function initVideoFacade() {
+    var VIDEO_ID = 'Aot3s447dFA';
+    var facade = document.getElementById('videoFacade');
+    var box = facade && facade.closest('.lp-hero__video');
+    if (!facade || !box) return;
 
     var player = null;
-    var bar = document.getElementById('vslBar');
-    var barTimer = null;
-    // Barre "fake" pilotée par la durée réelle :
-    //  - atteint 50 % en 30 s (temps réel écoulé)
-    //  - puis progresse normalement jusqu'à la fin de la vidéo
-    function startBar() {
-      if (barTimer || !bar) return;
-      bar.style.transition = 'width 0.25s linear';
-      barTimer = setInterval(function () {
-        if (!player || typeof player.getCurrentTime !== 'function') return;
-        var dur = 0, cur = 0, rate = 1.2;
-        try {
-          dur  = player.getDuration()     || 0;
-          cur  = player.getCurrentTime()  || 0;
-          rate = player.getPlaybackRate() || 1.2;
-        } catch (e) { return; }
-        if (dur <= 0) return; // métadonnées pas encore prêtes
-        var wallElapsed = cur / rate;   // secondes réelles écoulées
-        var wallTotal   = dur / rate;   // durée réelle de lecture
-        var pct;
-        if (wallTotal <= 30) {
-          pct = (wallElapsed / wallTotal) * 100;
-        } else if (wallElapsed <= 30) {
-          pct = (wallElapsed / 30) * 50;                       // 0 → 50 % en 30 s
-        } else {
-          pct = 50 + ((wallElapsed - 30) / (wallTotal - 30)) * 50; // 50 → 100 % ensuite
-        }
-        pct = Math.max(0, Math.min(100, pct));
-        bar.style.width = pct + '%';
-        if (pct >= 100) { clearInterval(barTimer); barTimer = null; }
-      }, 200);
-    }
-
-    // Charge l'API IFrame YouTube
-    var tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
-
-    window.onYouTubeIframeAPIReady = function () {
+    function setRate() {
       try {
         player = new YT.Player('vslPlayer', {
           events: {
             onReady: function (e) {
-              try { e.target.setPlaybackRate(1.2); } catch (x) {} // lecture ×1.2
-            },
-            onStateChange: function (e) {
-              if (e.data === 1) { // PLAYING
-                startBar();
-                try { e.target.setPlaybackRate(1.2); } catch (x) {} // re-force ×1.2
-              }
+              try { e.target.setPlaybackRate(1.2); e.target.playVideo(); } catch (x) {}
             }
           }
         });
-      } catch (e) { /* fallback gérera */ }
-    };
-
-    // Filet de sécurité : si l'API tarde, on lance la barre après le chargement.
-    window.addEventListener('load', function () { setTimeout(startBar, 1500); });
-
-    function hideOverlay() {
-      btn.classList.add('is-hidden');
+      } catch (e) {}
     }
 
-    btn.addEventListener('click', function () {
-      var done = false;
-      if (player && typeof player.unMute === 'function') {
-        try {
-          player.unMute();
-          player.setVolume(100);
-          player.playVideo();
-          done = true;
-        } catch (e) { done = false; }
+    facade.addEventListener('click', function () {
+      // Le clic (geste utilisateur) autorise la lecture AVEC le son
+      var iframe = document.createElement('iframe');
+      iframe.id = 'vslPlayer';
+      iframe.title = 'Vidéo Suna Films Media';
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
+      iframe.src = 'https://www.youtube.com/embed/' + VIDEO_ID +
+        '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1';
+      box.appendChild(iframe);
+      facade.remove();
+
+      if (typeof fbq !== 'undefined') fbq('trackCustom', 'VideoPlay');
+      track('video_play', 'played', 'yes');
+
+      // Lecture ×1.2 via l'API
+      if (window.YT && window.YT.Player) {
+        setRate();
+      } else {
+        var tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(tag);
+        window.onYouTubeIframeAPIReady = setRate;
       }
-      // Fallback : recharge la vidéo avec le son actif (le clic autorise l'audio)
-      if (!done) {
-        var base = 'https://www.youtube.com/embed/Aot3s447dFA';
-        iframe.src = base + '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=0&disablekb=1&enablejsapi=1';
-      }
-      startBar();
-      hideOverlay();
-      if (typeof fbq !== 'undefined') fbq('trackCustom', 'VideoUnmute');
-      track('video_unmuted', 'unmuted', 'yes');
     });
   })();
 

@@ -92,35 +92,17 @@
         </svg>
       </div>
 
-      <!-- Vidéo YouTube 16:9 -->
+      <!-- Vidéo 16:9 — miniature cliquable (pas d'autoplay) -->
       <div class="lp-hero__video-stage">
       <span class="lp-video-swish" aria-hidden="true"></span>
       <div class="lp-hero__video">
-        <iframe
-          id="vslPlayer"
-          src="https://www.youtube.com/embed/Aot3s447dFA?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&controls=0&disablekb=1&enablejsapi=1"
-          title="Vidéo de présentation Suna Films Media"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          loading="eager"
-          allowfullscreen>
-        </iframe>
-
-        <!-- Overlay tap-to-unmute : l'autoplay démarre en muet (imposé par les navigateurs),
-             ce bouton réactive le son au 1er tap puis disparaît. -->
-        <button type="button" class="lp-video-unmute" id="unmuteBtn" aria-label="Activer le son de la vidéo">
-          <span class="lp-video-unmute__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-            </svg>
+        <button type="button" class="lp-video-facade" id="videoFacade"
+                style="background-image:url('https://i.ytimg.com/vi/Aot3s447dFA/maxresdefault.jpg')"
+                aria-label="Lancer la vidéo">
+          <span class="lp-video-facade__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
           </span>
-          <span class="lp-video-unmute__label">▶ Cliquez pour lancer avec le son</span>
         </button>
-
-        <!-- Fausse barre de progression (~20 s) -->
-        <div class="lp-vsl-bar" aria-hidden="true"><span class="lp-vsl-bar__fill" id="vslBar"></span></div>
       </div>
       </div>
 
