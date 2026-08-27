@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Réserve ton appel — Suna Films Media</title>
+  <meta name="description" content="Réserve ton appel stratégique gratuit de 30 minutes avec Suna Films Media." />
+  <meta name="robots" content="noindex" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://api.leadconnectorhq.com" />
+  <link rel="preconnect" href="https://link.msgsndr.com" />
+  <link rel="preconnect" href="https://www.youtube.com" />
+  <link rel="preconnect" href="https://i.ytimg.com" />
+
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- ===== Meta Pixel ===== -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '889823396710916');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=889823396710916&ev=PageView&noscript=1" alt="" /></noscript>
+  <!-- ===== /Meta Pixel ===== -->
+
+  <!-- ===== Microsoft Clarity ===== -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xqmfwdo1jj");
+  </script>
+  <!-- ===== /Microsoft Clarity ===== -->
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="lp-rvheader">
+    <div class="lp-container lp-rvheader__inner">
+      <a href="/" class="lp-footer__brand">
+        <img src="/assets/images/sfm-logo.png" alt="" style="height:24px;" />
+        Suna Films Media
+      </a>
+      <span class="lp-rvheader__step">Dernière étape</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="lp-rvhero">
+    <div class="lp-rvhero__glow" aria-hidden="true"></div>
+    <div class="lp-container">
+      <span class="lp-eyebrow">✓ Tes infos sont enregistrées</span>
+      <h1 class="lp-rvhero__title">Réserve ton appel stratégique gratuit</h1>
+      <p class="lp-rvhero__sub">
+        Regarde la vidéo ci-dessous, puis choisis ton créneau.
+      </p>
+    </div>
+  </section>
+
+  <!-- VIDÉO (autoplay) -->
+  <section class="lp-rvvideo">
+    <div class="lp-container">
+      <div class="lp-hero__video">
+        <iframe
+          id="vslPlayer"
+          src="https://www.youtube.com/embed/yNBzXR0RrMQ?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1"
+          title="Vidéo Suna Films Media"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          loading="eager"
+          allowfullscreen>
+        </iframe>
+        <button type="button" class="lp-video-unmute" id="unmuteBtn" aria-label="Activer le son de la vidéo">
+          <span class="lp-video-unmute__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          </span>
+          <span class="lp-video-unmute__label">▶ Cliquez pour activer le son</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDRIER -->
+  <section class="lp-booking" id="booking">
+    <div class="lp-container">
+      <div class="lp-booking__wrap lp-booking__wrap--open">
+        <div class="lp-booking__calendar is-unlocked">
+          <iframe
+            id="ghlBooking"
+            src="https://api.leadconnectorhq.com/widget/booking/SUZpHLDFesSyKJdqzXlI"
+            title="Calendrier de réservation"
+            style="width:100%;border:none;overflow:hidden;"
+            scrolling="no"
+            width="100%" height="720"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pré-remplit le widget GHL avec les infos de la page principale -->
+  <script>
+    (function () {
+      try {
+        var p = new URLSearchParams(location.search);
+        var iframe = document.getElementById('ghlBooking');
+        if (!iframe) return;
+        var name = (p.get('name') || '').trim();
+        var parts = name.split(/\s+/);
+        var first = parts.shift() || '';
+        var last = parts.join(' ');
+        var qs = [];
+        if (first) qs.push('first_name=' + encodeURIComponent(first));
+        if (last)  qs.push('last_name=' + encodeURIComponent(last));
+        if (p.get('email')) qs.push('email=' + encodeURIComponent(p.get('email')));
+        if (p.get('phone')) qs.push('phone=' + encodeURIComponent(p.get('phone')));
+        if (qs.length) {
+          iframe.src = 'https://api.leadconnectorhq.com/widget/booking/SUZpHLDFesSyKJdqzXlI?' + qs.join('&');
+        }
+      } catch (e) { /* best-effort */ }
+    })();
+  </script>
+
+  <!-- FOOTER -->
+  <footer class="lp-footer">
+    <div class="lp-container lp-footer__inner">
+      <a href="/" class="lp-footer__brand">
+        <img src="/assets/images/sfm-logo.png" alt="" style="height:22px;" />
+        Suna Films Media
+      </a>
+      <div class="lp-footer__meta">
+        <a href="mailto:sunafilmsmedia@gmail.com">sunafilmsmedia@gmail.com</a>
+        · <span>© 2026 Suna Films Media Inc.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script d'embed GoHighLevel (resize auto) -->
+  <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+
+  <!-- RDV confirmé → pixel Schedule -->
+  <script>
+    (function () {
+      var fired = false;
+      window.addEventListener('message', function (e) {
+        if (fired) return;
+        var origin = e.origin || '';
+        if (!/leadconnectorhq\.com|msgsndr\.com|gohighlevel\.com/i.test(origin)) return;
+        var raw = '';
+        try { raw = typeof e.data === 'string' ? e.data : JSON.stringify(e.data || ''); } catch (x) {}
+        if (/height|resize|setheight/i.test(raw) && !/appoint|book|schedul|confirm/i.test(raw)) return;
+        if (/appointment.?booked|booking.?(success|complete|confirmed)|schedul|slotbooked/i.test(raw)) {
+          fired = true;
+          if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
+          if (typeof clarity !== 'undefined') { try { clarity('event', 'booking_scheduled'); } catch (x) {} }
+        }
+      });
+    })();
+  </script>
+
+  <!-- VSL autoplay muet → bouton pour activer le son -->
+  <script>
+    (function () {
+      var btn = document.getElementById('unmuteBtn');
+      var iframe = document.getElementById('vslPlayer');
+      if (!btn || !iframe) return;
+      var player = null;
+      var tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+      window.onYouTubeIframeAPIReady = function () {
+        try { player = new YT.Player('vslPlayer'); } catch (e) {}
+      };
+      btn.addEventListener('click', function () {
+        var done = false;
+        if (player && typeof player.unMute === 'function') {
+          try { player.unMute(); player.setVolume(100); player.playVideo(); done = true; } catch (e) {}
+        }
+        if (!done) {
+          iframe.src = 'https://www.youtube.com/embed/yNBzXR0RrMQ?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1';
+        }
+        btn.classList.add('is-hidden');
+        if (typeof fbq !== 'undefined') fbq('trackCustom', 'VideoUnmute');
+      });
+    })();
+  </script>
+</body>
+</html>
