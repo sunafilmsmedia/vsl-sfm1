@@ -346,7 +346,7 @@
       }
       // Fallback : recharge la vidéo avec le son actif (le clic autorise l'audio)
       if (!done) {
-        var base = 'https://www.youtube.com/embed/yNBzXR0RrMQ';
+        var base = 'https://www.youtube.com/embed/Aot3s447dFA';
         iframe.src = base + '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=0&disablekb=1&enablejsapi=1';
       }
       startBar();
