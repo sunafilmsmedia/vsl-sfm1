@@ -18,7 +18,6 @@
   <link rel="preconnect" href="https://i.ytimg.com" />
   <link rel="preconnect" href="https://s.ytimg.com" />
   <link rel="dns-prefetch" href="https://www.youtube.com" />
-  <link rel="preconnect" href="https://www.clarity.ms" />
   <link rel="preconnect" href="https://miro.com" />
 
   <!-- Fonts self-hostées -->
@@ -1465,7 +1464,7 @@ a { color: inherit; text-decoration: none; }
 
   </style>
 
-  <!-- ===== Tracking (Meta Pixel + Clarity) — chargé à la 1ère interaction (hors thread critique) ===== -->
+  <!-- ===== Meta Pixel — chargé à la 1ère interaction (hors thread critique) ===== -->
   <script>
   (function () {
     var loaded = false;
@@ -1474,8 +1473,6 @@ a { color: inherit; text-decoration: none; }
       // Meta Pixel
       !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
       fbq('init','889823396710916'); fbq('track','PageView');
-      // Microsoft Clarity
-      (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","xqmfwdo1jj");
     }
     var evs = ['pointerdown','touchstart','scroll','keydown','mousemove'];
     function onFirst(){ evs.forEach(function(ev){ window.removeEventListener(ev, onFirst); }); loadTracking(); }
@@ -1780,53 +1777,6 @@ a { color: inherit; text-decoration: none; }
       <a href="#apply" class="lp-btn lp-btn--primary lp-btn--lg lp-track-cta" data-cta="mid">
         Applique pour travailler avec nous →
       </a>
-    </div>
-  </section>
-
-  <!-- ============================================================= -->
-  <!-- SECTION 6 — TÉMOIGNAGES                                       -->
-  <!-- ============================================================= -->
-  <section class="lp-testimonials">
-    <div class="lp-container">
-      <div class="lp-section-head">
-        <span class="lp-eyebrow">Témoignages</span>
-        <h2 class="lp-h2">Ce que nos courtiers en disent</h2>
-      </div>
-
-      <div class="lp-testimonials__grid">
-        <div class="lp-tcard">
-          <div class="lp-tcard__video">
-            <iframe src="https://www.youtube.com/embed/Aa2-dUc9Qk8" title="Témoignage Roux & Bachand" loading="lazy" allowfullscreen></iframe>
-          </div>
-          <div class="lp-tcard__body">
-            <p class="lp-tcard__name">Roux &amp; Bachand</p>
-            <p class="lp-tcard__role">Équipe immobilière</p>
-            <p class="lp-tcard__result">55+ leads qualifiés par mois</p>
-          </div>
-        </div>
-
-        <div class="lp-tcard">
-          <div class="lp-tcard__video">
-            <iframe src="https://www.youtube.com/embed/UG8xz_2QZcc" title="Témoignage Myriam Roux" loading="lazy" allowfullscreen></iframe>
-          </div>
-          <div class="lp-tcard__body">
-            <p class="lp-tcard__name">Myriam Roux</p>
-            <p class="lp-tcard__role">Chef d'équipe — Équipe R&amp;B</p>
-            <p class="lp-tcard__result">Q2 fermé à +40% vs Q1</p>
-          </div>
-        </div>
-
-        <div class="lp-tcard">
-          <div class="lp-tcard__video">
-            <iframe src="https://www.youtube.com/embed/4TQJn80cHMg" title="Témoignage Martin Ross" loading="lazy" allowfullscreen></iframe>
-          </div>
-          <div class="lp-tcard__body">
-            <p class="lp-tcard__name">Martin Ross</p>
-            <p class="lp-tcard__role">Courtier hypothécaire</p>
-            <p class="lp-tcard__result">79 leads en juin · croissance constante</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
