@@ -246,7 +246,7 @@
 
   // ===== VSL : miniature → lecture au clic (pas d'autoplay) =====
   (function initVideoFacade() {
-    var VIDEO_ID = 'Aot3s447dFA';
+    var VIDEO_ID = 'QQHwfrj70tM';
     var facade = document.getElementById('videoFacade');
     var box = facade && facade.closest('.lp-hero__video');
     if (!facade || !box) return;
