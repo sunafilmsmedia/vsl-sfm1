@@ -341,53 +341,31 @@
     });
   })();
 
-  // ===== VSL : miniature → lecture au clic (pas d'autoplay) =====
-  (function initVideoFacade() {
-    var VIDEO_ID = 'yNBzXR0RrMQ';
-    var facade = document.getElementById('videoFacade');
-    var box = facade && facade.closest('.lp-hero__video');
-    if (!facade || !box) return;
+  // ===== VSL : vidéo embarquée directement (autoplay muet), lecture ×1.2 =====
+  (function initHeroVideo() {
+    var iframe = document.getElementById('vslPlayer');
+    if (!iframe) return;
 
-    var player = null;
     function setRate() {
       try {
-        player = new YT.Player('vslPlayer', {
+        new YT.Player('vslPlayer', {
           events: {
             onReady: function (e) {
-              try { e.target.setPlaybackRate(1.2); e.target.playVideo(); } catch (x) {}
+              try { e.target.setPlaybackRate(1.2); } catch (x) {}
             }
           }
         });
       } catch (e) {}
     }
 
-    facade.addEventListener('click', function () {
-      // Le clic (geste utilisateur) autorise la lecture AVEC le son
-      var iframe = document.createElement('iframe');
-      iframe.id = 'vslPlayer';
-      iframe.title = 'Vidéo Suna Films Media';
-      iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
-      iframe.src = 'https://www.youtube.com/embed/' + VIDEO_ID +
-        '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1';
-      box.appendChild(iframe);
-      facade.remove();
-
-      if (typeof fbq !== 'undefined') fbq('trackCustom', 'VideoPlay');
-      track('video_play', 'played', 'yes');
-
-      // Lecture ×1.2 via l'API
-      if (window.YT && window.YT.Player) {
-        setRate();
-      } else {
-        var tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        document.head.appendChild(tag);
-        window.onYouTubeIframeAPIReady = setRate;
-      }
-    });
+    if (window.YT && window.YT.Player) {
+      setRate();
+    } else {
+      var tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+      window.onYouTubeIframeAPIReady = setRate;
+    }
   })();
 
   // Écoute le widget de réservation GHL : RDV confirmé → pixel Schedule.
