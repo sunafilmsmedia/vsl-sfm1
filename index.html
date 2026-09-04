@@ -813,6 +813,33 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase; color: var(--text-dim); margin-top: 2px;
 }
 
+/* Carte « total portefeuille » (résultat agrégé, sans photo) */
+.lp-icard--total {
+  background: linear-gradient(160deg, rgba(255,95,0,0.16), rgba(255,95,0,0.04));
+  border-color: rgba(255,95,0,0.5);
+}
+.lp-icard__badge {
+  width: 92px; height: 92px; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px; font-size: 38px; line-height: 1;
+  background: rgba(255,95,0,0.16); border: 2px solid rgba(255,95,0,0.5);
+}
+
+/* Carte à logo (au lieu d'un portrait) — logos déjà blancs sur transparent */
+.lp-icard__logo {
+  width: 100%; height: 72px; min-height: 72px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px 14px; margin-bottom: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,95,0,0.35);
+  border-radius: 14px;
+}
+.lp-icard__logo img {
+  max-height: 44px; max-width: 190px;
+  width: auto; height: auto; object-fit: contain;
+  opacity: 0.95; display: block;
+}
+
 /* ============================================================= */
 /* SECTION 4B — SYSTÈME (aperçu Miro verrouillé)                */
 /* ============================================================= */
@@ -1606,7 +1633,7 @@ a { color: inherit; text-decoration: none; }
   <section class="lp-impact">
     <div class="lp-container">
       <div class="lp-section-head">
-        <span class="lp-eyebrow">Impact du logiciel AI · mai → juillet 2026</span>
+        <span class="lp-eyebrow">Impact du logiciel AI · mai → août 2026</span>
         <h2 class="lp-h2">Voici ce que ça donne concrètement.</h2>
       </div>
     </div>
@@ -1615,6 +1642,22 @@ a { color: inherit; text-decoration: none; }
     <div class="lp-slider" data-slider>
       <button type="button" class="lp-slider__arrow lp-slider__arrow--prev" data-prev aria-label="Précédent">‹</button>
       <div class="lp-slider__track" data-track>
+
+        <!-- Carte TOTAL PORTEFEUILLE (vrais chiffres Meta Ads · août 2026) -->
+        <article class="lp-icard lp-icard--total">
+          <span class="lp-icard__badge" aria-hidden="true">📊</span>
+          <div class="lp-icard__body">
+            <p class="lp-icard__name">Portefeuille complet</p>
+            <p class="lp-icard__metric">Leads qualifiés / mois</p>
+            <div class="lp-icard__prog">
+              <span class="lp-icard__from">545</span>
+              <span class="lp-icard__arrow">→</span>
+              <span class="lp-icard__to">926</span>
+            </div>
+            <span class="lp-icard__pct">+70%</span>
+            <span class="lp-icard__period">juin → août 2026</span>
+          </div>
+        </article>
 
         <!-- Cartes PROGRESSION (avant → après) -->
         <article class="lp-icard">
@@ -1693,6 +1736,33 @@ a { color: inherit; text-decoration: none; }
             <div class="lp-icard__single">27</div>
             <span class="lp-icard__pct">juillet 2026</span>
             <span class="lp-icard__period">courtier</span>
+          </div>
+        </article>
+
+        <!-- Cartes RÉSULTAT à logo -->
+        <article class="lp-icard lp-icard--logo">
+          <span class="lp-icard__logo">
+            <img width="720" height="240" loading="lazy" src="/assets/images/brokers/jp-bolduc.webp" alt="Jean-Philippe Bolduc" />
+          </span>
+          <div class="lp-icard__body">
+            <p class="lp-icard__name">Jean-Philippe Bolduc</p>
+            <p class="lp-icard__metric">Leads qualifiés</p>
+            <div class="lp-icard__single">58</div>
+            <span class="lp-icard__pct">CPL 15,76 $</span>
+            <span class="lp-icard__period">Courtier hypothécaire · Alliance</span>
+          </div>
+        </article>
+
+        <article class="lp-icard lp-icard--logo">
+          <span class="lp-icard__logo">
+            <img width="1679" height="240" loading="lazy" src="/assets/images/brokers/yannick-charette.webp" alt="Yannick Charette" />
+          </span>
+          <div class="lp-icard__body">
+            <p class="lp-icard__name">Yannick Charette</p>
+            <p class="lp-icard__metric">Leads qualifiés</p>
+            <div class="lp-icard__single">70</div>
+            <span class="lp-icard__pct">CPL 17,89 $</span>
+            <span class="lp-icard__period">Courtier hypothécaire · Alliance</span>
           </div>
         </article>
 
