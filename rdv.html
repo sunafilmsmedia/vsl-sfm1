@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Réserve ton appel — Suna Films Media</title>
-  <meta name="description" content="Réserve ton appel stratégique gratuit de 30 minutes avec Suna Films Media." />
+  <meta name="description" content="Choisis ton créneau d'appel stratégique gratuit de 30 minutes avec Suna Films Media." />
   <meta name="robots" content="noindex" />
   <link rel="preconnect" href="https://api.leadconnectorhq.com" />
   <link rel="preconnect" href="https://link.msgsndr.com" />
@@ -14,6 +14,50 @@
   <link rel="preload" href="/assets/fonts/inter-900.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/style.css" />
+
+  <style>
+    /* ===== FAQ (accordéon vidéo) ===== */
+    .rv-faq { padding: 20px 0 90px; }
+    .rv-faq__head { text-align: center; max-width: 640px; margin: 0 auto 34px; }
+    .rv-faq__title {
+      font-size: clamp(26px, 4vw, 38px); font-weight: 900;
+      letter-spacing: -0.02em; color: #fff; margin: 6px 0 10px; line-height: 1.12;
+    }
+    .rv-faq__sub { font-size: 15px; color: var(--text-dim); line-height: 1.5; }
+    .rv-faq__list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .rv-faq__item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,95,0,0.24);
+      border-radius: 14px; overflow: hidden;
+    }
+    .rv-faq__item[open] { border-color: rgba(255,95,0,0.5); }
+    .rv-faq__q {
+      list-style: none; cursor: pointer;
+      display: flex; align-items: center; gap: 14px;
+      padding: 20px 22px;
+      font-size: clamp(16px, 2.2vw, 19px); font-weight: 700; color: #fff;
+      transition: background 0.2s;
+    }
+    .rv-faq__q::-webkit-details-marker { display: none; }
+    .rv-faq__q:hover { background: rgba(255,255,255,0.03); }
+    .rv-faq__num {
+      flex: 0 0 auto; font-size: 12px; font-weight: 800; letter-spacing: 0.04em;
+      color: var(--brand); background: rgba(255,95,0,0.14);
+      border-radius: 8px; padding: 5px 9px; min-width: 34px; text-align: center;
+    }
+    .rv-faq__qtext { flex: 1; }
+    .rv-faq__chev {
+      flex: 0 0 auto; color: var(--brand); font-size: 20px; line-height: 1;
+      transition: transform 0.25s; transform: rotate(0deg);
+    }
+    .rv-faq__item[open] .rv-faq__chev { transform: rotate(180deg); }
+    .rv-faq__body { padding: 0 22px 22px; }
+    .rv-faq__video {
+      width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden;
+      background: #0a0a0a; border: 1px solid rgba(255,255,255,0.08);
+    }
+    .rv-faq__video iframe { width: 100%; height: 100%; border: none; display: block; }
+  </style>
 
   <!-- ===== Meta Pixel ===== -->
   <script>
@@ -50,37 +94,10 @@
     <div class="lp-rvhero__glow" aria-hidden="true"></div>
     <div class="lp-container">
       <span class="lp-eyebrow">✓ Tes infos sont enregistrées</span>
-      <h1 class="lp-rvhero__title">Comprends le système complet</h1>
+      <h1 class="lp-rvhero__title">Réserve ton appel stratégique</h1>
       <p class="lp-rvhero__sub">
-        Regarde la vidéo ci-dessous, puis choisis ton créneau.
+        Choisis ton créneau ci-dessous. Tu as des questions&nbsp;? Les réponses sont juste en bas.
       </p>
-    </div>
-  </section>
-
-  <!-- VIDÉO (autoplay) -->
-  <section class="lp-rvvideo">
-    <div class="lp-container">
-      <div class="lp-hero__video">
-        <iframe
-          id="vslPlayer"
-          src="https://www.youtube.com/embed/yNBzXR0RrMQ?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1"
-          title="Vidéo Suna Films Media"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          loading="eager"
-          allowfullscreen>
-        </iframe>
-        <button type="button" class="lp-video-unmute" id="unmuteBtn" aria-label="Activer le son de la vidéo">
-          <span class="lp-video-unmute__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-            </svg>
-          </span>
-          <span class="lp-video-unmute__label">▶ Cliquez pour activer le son</span>
-        </button>
-      </div>
     </div>
   </section>
 
@@ -100,6 +117,91 @@
       </div>
     </div>
   </section>
+
+  <!-- FAQ (accordéon vidéo) -->
+  <section class="rv-faq" id="faq">
+    <div class="lp-container">
+      <div class="rv-faq__head">
+        <span class="lp-eyebrow">Avant l'appel</span>
+        <h2 class="rv-faq__title">Les questions qu'on nous pose à chaque appel</h2>
+        <p class="rv-faq__sub">Clique sur une question pour voir la réponse en vidéo.</p>
+      </div>
+
+      <div class="rv-faq__list">
+        <details class="rv-faq__item">
+          <summary class="rv-faq__q">
+            <span class="rv-faq__num">01</span>
+            <span class="rv-faq__qtext">Pourquoi nous&nbsp;?</span>
+            <span class="rv-faq__chev" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="rv-faq__body">
+            <div class="rv-faq__video" data-video="Ibtb_6sLFys"></div>
+          </div>
+        </details>
+
+        <details class="rv-faq__item">
+          <summary class="rv-faq__q">
+            <span class="rv-faq__num">02</span>
+            <span class="rv-faq__qtext">Combien ça coûte&nbsp;?</span>
+            <span class="rv-faq__chev" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="rv-faq__body">
+            <div class="rv-faq__video" data-video="RmrQ3wK4wFE"></div>
+          </div>
+        </details>
+
+        <details class="rv-faq__item">
+          <summary class="rv-faq__q">
+            <span class="rv-faq__num">03</span>
+            <span class="rv-faq__qtext">Quelle est la garantie&nbsp;?</span>
+            <span class="rv-faq__chev" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="rv-faq__body">
+            <div class="rv-faq__video" data-video="n9MLgRDjHx0"></div>
+          </div>
+        </details>
+
+        <details class="rv-faq__item">
+          <summary class="rv-faq__q">
+            <span class="rv-faq__num">04</span>
+            <span class="rv-faq__qtext">Est-ce qu'y a un engagement&nbsp;?</span>
+            <span class="rv-faq__chev" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="rv-faq__body">
+            <div class="rv-faq__video" data-video="citzsHAB2LY"></div>
+          </div>
+        </details>
+
+        <details class="rv-faq__item">
+          <summary class="rv-faq__q">
+            <span class="rv-faq__num">05</span>
+            <span class="rv-faq__qtext">Qu'est-ce qu'on va voir lors de l'appel découverte&nbsp;?</span>
+            <span class="rv-faq__chev" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="rv-faq__body">
+            <div class="rv-faq__video" data-video="Aot3s447dFA"></div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="lp-footer">
+    <div class="lp-container lp-footer__inner">
+      <a href="/" class="lp-footer__brand">
+        <img src="/assets/images/sfm-logo.png" alt="" style="height:22px;" />
+        Suna Films Media
+      </a>
+      <div class="lp-footer__meta">
+        <a href="mailto:sunafilmsmedia@gmail.com">sunafilmsmedia@gmail.com</a>
+        · <span>© 2026 Suna Films Media Inc.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script d'embed GoHighLevel (resize auto) -->
+  <script src="https://link.msgsndr.com/js/form_embed.js"></script>
 
   <!-- Pré-remplit le widget GHL avec les infos de la page principale -->
   <script>
@@ -124,23 +226,6 @@
     })();
   </script>
 
-  <!-- FOOTER -->
-  <footer class="lp-footer">
-    <div class="lp-container lp-footer__inner">
-      <a href="/" class="lp-footer__brand">
-        <img src="/assets/images/sfm-logo.png" alt="" style="height:22px;" />
-        Suna Films Media
-      </a>
-      <div class="lp-footer__meta">
-        <a href="mailto:sunafilmsmedia@gmail.com">sunafilmsmedia@gmail.com</a>
-        · <span>© 2026 Suna Films Media Inc.</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Script d'embed GoHighLevel (resize auto) -->
-  <script src="https://link.msgsndr.com/js/form_embed.js"></script>
-
   <!-- RDV confirmé → pixel Schedule -->
   <script>
     (function () {
@@ -155,35 +240,29 @@
         if (/appointment.?booked|booking.?(success|complete|confirmed)|schedul|slotbooked/i.test(raw)) {
           fired = true;
           if (typeof fbq !== 'undefined') fbq('track', 'Schedule');
-          if (typeof clarity !== 'undefined') { try { clarity('event', 'booking_scheduled'); } catch (x) {} }
         }
       });
     })();
   </script>
 
-  <!-- VSL autoplay muet → bouton pour activer le son -->
+  <!-- FAQ : charge la vidéo YouTube seulement à l'ouverture (léger) -->
   <script>
     (function () {
-      var btn = document.getElementById('unmuteBtn');
-      var iframe = document.getElementById('vslPlayer');
-      if (!btn || !iframe) return;
-      var player = null;
-      var tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      document.head.appendChild(tag);
-      window.onYouTubeIframeAPIReady = function () {
-        try { player = new YT.Player('vslPlayer'); } catch (e) {}
-      };
-      btn.addEventListener('click', function () {
-        var done = false;
-        if (player && typeof player.unMute === 'function') {
-          try { player.unMute(); player.setVolume(100); player.playVideo(); done = true; } catch (e) {}
-        }
-        if (!done) {
-          iframe.src = 'https://www.youtube.com/embed/yNBzXR0RrMQ?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1';
-        }
-        btn.classList.add('is-hidden');
-        if (typeof fbq !== 'undefined') fbq('trackCustom', 'VideoUnmute');
+      document.querySelectorAll('.rv-faq__item').forEach(function (item) {
+        item.addEventListener('toggle', function () {
+          if (!item.open) return;
+          var holder = item.querySelector('.rv-faq__video');
+          if (!holder || holder.dataset.loaded) return;
+          var id = holder.getAttribute('data-video');
+          var f = document.createElement('iframe');
+          f.src = 'https://www.youtube.com/embed/' + id + '?rel=0&modestbranding=1&playsinline=1';
+          f.title = 'Réponse en vidéo';
+          f.loading = 'lazy';
+          f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          f.allowFullscreen = true;
+          holder.appendChild(f);
+          holder.dataset.loaded = '1';
+        });
       });
     })();
   </script>
