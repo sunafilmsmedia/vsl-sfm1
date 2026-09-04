@@ -841,6 +841,72 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================= */
+/* SECTION 2B — MINI-CALENDRIER                                  */
+/* ============================================================= */
+.lp-datepick { padding: 40px 0 6px; }
+.lp-datepick__card {
+  max-width: 384px; margin: 0 auto;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,95,0,0.28);
+  border-radius: 18px;
+  padding: 22px 20px 24px;
+  text-align: center;
+}
+.lp-datepick__title { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
+.lp-datepick__sub { font-size: 13px; color: var(--text-dim); margin: 6px 0 16px; line-height: 1.4; }
+.lp-cal__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.lp-cal__month { font-size: 14px; font-weight: 700; color: #fff; text-transform: capitalize; letter-spacing: 0.02em; }
+.lp-cal__nav {
+  width: 32px; height: 32px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.04);
+  color: #fff; font-size: 18px; line-height: 1; cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+}
+.lp-cal__nav:hover:not([disabled]) { background: var(--brand); border-color: var(--brand); }
+.lp-cal__nav[disabled] { opacity: 0.3; cursor: default; }
+.lp-cal__dow { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; }
+.lp-cal__dow span { font-size: 10px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; }
+.lp-cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.lp-cal__day {
+  aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
+  border: none; background: rgba(255,255,255,0.05); color: #fff;
+  border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, transform 0.15s;
+}
+.lp-cal__day:hover:not([disabled]) { background: var(--brand); transform: translateY(-1px); }
+.lp-cal__day[disabled] { color: rgba(255,255,255,0.18); cursor: default; background: transparent; }
+.lp-cal__day--empty { background: transparent; cursor: default; }
+
+.lp-apply__chosen {
+  display: inline-block; margin: -8px 0 20px;
+  padding: 7px 14px; border-radius: 999px;
+  background: rgba(255,95,0,0.14); border: 1px solid rgba(255,95,0,0.4);
+  color: var(--brand); font-size: 13px; font-weight: 700;
+}
+
+/* ============================================================= */
+/* SECTION 2C — MÉTRIQUES (vues + leads + CPL)                   */
+/* ============================================================= */
+.lp-metrics { padding: 34px 0 10px; }
+.lp-metrics__grid {
+  max-width: 760px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  padding: 44px 0; text-align: center;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.lp-metric__value {
+  display: block; font-size: clamp(34px, 5vw, 56px); font-weight: 900;
+  color: var(--brand); letter-spacing: -0.03em; line-height: 1; margin-bottom: 10px;
+}
+.lp-metric__label { font-size: 13px; color: var(--text-dim); letter-spacing: 0.02em; }
+@media (max-width: 560px) {
+  .lp-metrics__grid { grid-template-columns: 1fr; gap: 30px; padding: 34px 0; }
+}
+
+/* ============================================================= */
 /* SECTION 4B — SYSTÈME (aperçu Miro verrouillé)                */
 /* ============================================================= */
 .lp-system { padding: 100px 0; }
@@ -1628,6 +1694,51 @@ a { color: inherit; text-decoration: none; }
   </section>
 
   <!-- ============================================================= -->
+  <!-- SECTION 2B — MINI-CALENDRIER (choisir une date -> formulaire)  -->
+  <!-- ============================================================= -->
+  <section class="lp-datepick">
+    <div class="lp-container">
+      <div class="lp-datepick__card">
+        <p class="lp-datepick__title">Choisis ta date d'appel</p>
+        <p class="lp-datepick__sub">Sélectionne un jour — on te montre les créneaux disponibles juste après.</p>
+        <div class="lp-cal" id="miniCal" aria-label="Choisir une date d'appel">
+          <div class="lp-cal__head">
+            <button type="button" class="lp-cal__nav" id="calPrev" aria-label="Mois précédent">‹</button>
+            <span class="lp-cal__month" id="calMonth">—</span>
+            <button type="button" class="lp-cal__nav" id="calNext" aria-label="Mois suivant">›</button>
+          </div>
+          <div class="lp-cal__dow">
+            <span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span>
+          </div>
+          <div class="lp-cal__grid" id="calGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION 2C — MÉTRIQUES (repris du site : vues + leads + CPL)   -->
+  <!-- ============================================================= -->
+  <section class="lp-metrics">
+    <div class="lp-container">
+      <div class="lp-metrics__grid" id="lpMetrics">
+        <div class="lp-metric">
+          <span class="lp-metric__value" data-count="3456000">3 456 000</span>
+          <span class="lp-metric__label">vues générées en août 2026</span>
+        </div>
+        <div class="lp-metric">
+          <span class="lp-metric__value" data-count="926">926</span>
+          <span class="lp-metric__label">leads générés en août 2026</span>
+        </div>
+        <div class="lp-metric">
+          <span class="lp-metric__value">26,88&nbsp;$</span>
+          <span class="lp-metric__label">coût par lead moyen</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
   <!-- SECTION 3 — IMPACT DU AI (stats)                              -->
   <!-- ============================================================= -->
   <section class="lp-impact">
@@ -2067,6 +2178,7 @@ a { color: inherit; text-decoration: none; }
         <p class="lp-apply__sub">
           Réponds à 4 questions.
         </p>
+        <p class="lp-apply__chosen" id="applyChosenDate" hidden></p>
 
         <form id="leadForm" class="lp-form lp-apply__form" novalidate>
           <div class="lp-apply__progress"><span class="lp-apply__progress-bar" id="applyBar"></span></div>

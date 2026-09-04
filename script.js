@@ -91,6 +91,103 @@
     if (e.key === 'Escape' && applyModal && applyModal.classList.contains('is-open')) closeApplyModal();
   });
 
+  // ===== Mini-calendrier : choisir une date -> ouvre le formulaire =====
+  (function initMiniCal() {
+    var grid   = document.getElementById('calGrid');
+    var monthE = document.getElementById('calMonth');
+    var prevB  = document.getElementById('calPrev');
+    var nextB  = document.getElementById('calNext');
+    var chosen = document.getElementById('applyChosenDate');
+    if (!grid || !monthE) return;
+
+    var MONTHS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+    var DAYS   = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+    var today  = new Date(); today.setHours(0,0,0,0);
+    var view   = new Date(today.getFullYear(), today.getMonth(), 1);
+    var minMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    function render() {
+      grid.innerHTML = '';
+      monthE.textContent = MONTHS[view.getMonth()] + ' ' + view.getFullYear();
+      // Lundi = première colonne
+      var firstDow = (new Date(view.getFullYear(), view.getMonth(), 1).getDay() + 6) % 7;
+      var daysIn   = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+      for (var i = 0; i < firstDow; i++) {
+        var e = document.createElement('span');
+        e.className = 'lp-cal__day lp-cal__day--empty';
+        grid.appendChild(e);
+      }
+      for (var d = 1; d <= daysIn; d++) {
+        var date = new Date(view.getFullYear(), view.getMonth(), d);
+        var btn  = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'lp-cal__day';
+        btn.textContent = d;
+        var isPast    = date < today;
+        var isWeekend = date.getDay() === 0 || date.getDay() === 6;
+        if (isPast || isWeekend) {
+          btn.disabled = true;
+        } else {
+          (function (dt) {
+            btn.addEventListener('click', function () { pick(dt); });
+          })(date);
+        }
+        grid.appendChild(btn);
+      }
+      // Empêche de reculer avant le mois courant
+      prevB.disabled = (view.getFullYear() === minMonth.getFullYear() && view.getMonth() === minMonth.getMonth());
+    }
+
+    function pick(date) {
+      if (chosen) {
+        var label = DAYS[date.getDay()] + ' ' + date.getDate() + ' ' + MONTHS[date.getMonth()];
+        chosen.textContent = '📅 Appel souhaité : ' + label;
+        chosen.hidden = false;
+      }
+      if (typeof fbq !== 'undefined') fbq('trackCustom', 'ClickBookCTA', { source: 'calendar' });
+      track('click_cta', 'cta_source', 'calendar');
+      openApplyModal();
+    }
+
+    prevB.addEventListener('click', function () {
+      view = new Date(view.getFullYear(), view.getMonth() - 1, 1); render();
+    });
+    nextB.addEventListener('click', function () {
+      view = new Date(view.getFullYear(), view.getMonth() + 1, 1); render();
+    });
+    render();
+  })();
+
+  // ===== Compteurs animés (carré métriques : vues + leads) =====
+  (function initMetrics() {
+    var nums = document.querySelectorAll('.lp-metric__value[data-count]');
+    if (!nums.length || !('IntersectionObserver' in window)) return;
+    var started = false;
+    function animate(el) {
+      var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+      var start  = performance.now();
+      var dur    = 1800;
+      function step(now) {
+        var p = Math.min((now - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.floor(eased * target).toLocaleString('fr-CA');
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target.toLocaleString('fr-CA');
+      }
+      requestAnimationFrame(step);
+    }
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !started) {
+          started = true;
+          nums.forEach(animate);
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    obs.observe(document.getElementById('lpMetrics'));
+  })();
+
   // ===== Formulaire multi-étapes (une question à la fois) =====
   (function initSteps() {
     if (!form) return;
