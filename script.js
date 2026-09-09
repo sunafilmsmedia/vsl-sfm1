@@ -211,6 +211,12 @@
     function validCurrent() {
       var inp = steps[cur].querySelector('input:not([type=hidden])');
       if (inp && !inp.checkValidity()) { inp.reportValidity(); return false; }
+      // Étape à choix : exiger une sélection avant d'avancer
+      var group = steps[cur].querySelector('.lp-apply__choices[data-target]');
+      if (group) {
+        var target = document.getElementById(group.getAttribute('data-target'));
+        if (target && !target.value) { group.classList.add('is-error'); return false; }
+      }
       return true;
     }
     form.querySelectorAll('[data-next]').forEach(function (btn) {
@@ -219,12 +225,16 @@
     form.querySelectorAll('[data-back]').forEach(function (btn) {
       btn.addEventListener('click', function () { if (cur > 0) show(cur - 1); });
     });
-    // Choix du domaine
+    // Choix (par groupe : chaque .lp-apply__choices écrit dans son input data-target)
     form.querySelectorAll('.lp-apply__choice').forEach(function (c) {
       c.addEventListener('click', function () {
-        form.querySelectorAll('.lp-apply__choice').forEach(function (x) { x.classList.remove('is-selected'); });
+        var group = c.closest('.lp-apply__choices');
+        if (!group) return;
+        group.querySelectorAll('.lp-apply__choice').forEach(function (x) { x.classList.remove('is-selected'); });
         c.classList.add('is-selected');
-        if (domaineInput) domaineInput.value = c.dataset.value || '';
+        group.classList.remove('is-error');
+        var target = document.getElementById(group.getAttribute('data-target'));
+        if (target) target.value = c.dataset.value || '';
       });
     });
     // Entrée = étape suivante (sauf dernière)
@@ -249,11 +259,18 @@
         form.reportValidity();
         return;
       }
-      // Le domaine (étape 4) doit être choisi
+      // Le domaine (étape 4) et l'expérience (étape 5) doivent être choisis
       var domaineEl = document.getElementById('lead-domaine');
       if (domaineEl && !domaineEl.value) {
-        var choices = form.querySelector('.lp-apply__choices');
-        if (choices) choices.classList.add('is-error');
+        var dChoices = domaineEl.closest('.lp-apply__step').querySelector('.lp-apply__choices');
+        if (dChoices) dChoices.classList.add('is-error');
+        if (form._stepShow) form._stepShow(3);
+        return;
+      }
+      var experienceEl = document.getElementById('lead-experience');
+      if (experienceEl && !experienceEl.value) {
+        var eChoices = experienceEl.closest('.lp-apply__step').querySelector('.lp-apply__choices');
+        if (eChoices) eChoices.classList.add('is-error');
         return;
       }
 
@@ -275,6 +292,7 @@
         telephone: data.get('telephone') || '',
         courriel: data.get('courriel') || '',
         domaine: data.get('domaine') || '',
+        experience: data.get('experience') || '',
         // Attribution Meta
         fbclid: fb.fbclid,
         fbc: fb.fbc,

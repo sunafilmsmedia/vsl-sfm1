@@ -1604,13 +1604,10 @@ a { color: inherit; text-decoration: none; }
 
       <p class="lp-hero__guarantee">— ou on travaille gratuitement.</p>
 
-      <p class="lp-hero__sub">
-        Ton implication : une demi-journée aux deux mois. On s'occupe de tout le reste.
-      </p>
 
       <!-- Flèche + phrase pointant vers la vidéo -->
       <div class="lp-hero__vsl-cue">
-        <span class="lp-hero__vsl-text">Qu'est-ce qu'on va voir lors de l'appel découverte?</span>
+        <span class="lp-hero__vsl-text">Comprends comment on te génère des leads</span>
         <svg class="lp-hero__vsl-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
              stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M12 5v14"></path><path d="M19 12l-7 7-7-7"></path>
@@ -2118,13 +2115,13 @@ a { color: inherit; text-decoration: none; }
       <button type="button" class="lp-modal__close" id="applyClose" aria-label="Fermer">×</button>
       <div class="lp-apply__card lp-apply__card--modal">        <h3 class="lp-apply__title">Découvre comment on t'installe le système en 2 semaines</h3>
         <p class="lp-apply__sub">
-          Réponds à 4 questions.
+          Réponds à 5 questions.
         </p>
         <p class="lp-apply__chosen" id="applyChosenDate" hidden></p>
 
         <form id="leadForm" class="lp-form lp-apply__form" novalidate>
           <div class="lp-apply__progress"><span class="lp-apply__progress-bar" id="applyBar"></span></div>
-          <p class="lp-apply__count"><span id="applyStepNum">1</span> / 4</p>
+          <p class="lp-apply__count"><span id="applyStepNum">1</span> / 5</p>
 
           <!-- Étape 1 -->
           <div class="lp-apply__step is-active" data-step="1">
@@ -2156,12 +2153,27 @@ a { color: inherit; text-decoration: none; }
           <!-- Étape 4 : domaine (choix) -->
           <div class="lp-apply__step" data-step="4">
             <label>Dans quel domaine tu travailles&nbsp;?</label>
-            <div class="lp-apply__choices">
+            <div class="lp-apply__choices" data-target="lead-domaine">
               <button type="button" class="lp-apply__choice" data-value="Courtier hypothécaire">Courtier hypothécaire</button>
               <button type="button" class="lp-apply__choice" data-value="Courtier immobilier">Courtier immobilier</button>
               <button type="button" class="lp-apply__choice" data-value="Autre">Autre</button>
             </div>
             <input type="hidden" name="domaine" id="lead-domaine" />
+            <div class="lp-apply__nav">
+              <button type="button" class="lp-apply__back" data-back>← Retour</button>
+              <button type="button" class="lp-btn lp-btn--primary lp-btn--lg" data-next>Suivant →</button>
+            </div>
+          </div>
+
+          <!-- Étape 5 : expérience (choix) -->
+          <div class="lp-apply__step" data-step="5">
+            <label>Depuis combien d'années es-tu courtier&nbsp;?</label>
+            <div class="lp-apply__choices" data-target="lead-experience">
+              <button type="button" class="lp-apply__choice" data-value="2-3 ans">2-3 ans</button>
+              <button type="button" class="lp-apply__choice" data-value="4-6 ans">4-6 ans</button>
+              <button type="button" class="lp-apply__choice" data-value="6 ans et plus">6 ans et plus</button>
+            </div>
+            <input type="hidden" name="experience" id="lead-experience" />
             <div class="lp-apply__nav">
               <button type="button" class="lp-apply__back" data-back>← Retour</button>
               <button type="submit" class="lp-btn lp-btn--primary lp-btn--lg lp-form__submit">

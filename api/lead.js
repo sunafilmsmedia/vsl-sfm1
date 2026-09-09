@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST')    return res.status(405).json({ error: 'Method not allowed' });
 
-  const { nom, telephone, courriel, domaine, fbclid, fbc, fbp, landing_url } = req.body || {};
+  const { nom, telephone, courriel, domaine, experience, fbclid, fbc, fbp, landing_url } = req.body || {};
 
   // Validation
   if (!nom || !telephone || !courriel) {
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
     email: courriel, phone: telephone,
 
     // Français (custom fields)
-    nom, telephone, courriel, domaine,
+    nom, telephone, courriel, domaine, experience,
 
     // Segmentation (heure du Québec) pour router vers la bonne automatisation
     periode,                              // "jour" | "hors_periode" | "nuit"
@@ -110,6 +110,7 @@ export default async function handler(req, res) {
             <p><strong>Téléphone :</strong> ${telephone}</p>
             <p><strong>Courriel :</strong> ${courriel}</p>
             <p><strong>Domaine :</strong> ${domaine || '—'}</p>
+            <p><strong>Expérience :</strong> ${experience || '—'}</p>
             <hr>
             <p><small>Source: ${req.headers.referer || '—'}</small></p>
             <p><small>Submitted at: ${payload.submitted_at}</small></p>
