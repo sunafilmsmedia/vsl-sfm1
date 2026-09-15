@@ -359,51 +359,45 @@
     });
   })();
 
-  // ===== VSL : miniature (bouton orange) → lecture AVEC le son au clic (pas d'autoplay) =====
+  // ===== VSL : miniature (bouton orange) → lecture Wistia AVEC le son au clic (pas d'autoplay) =====
   (function initVideoFacade() {
-    var VIDEO_ID = 'yNBzXR0RrMQ';
+    var WISTIA_ID = 'jekmpm4gvt';
     var facade = document.getElementById('videoFacade');
     var box = facade && facade.closest('.lp-hero__video');
     if (!facade || !box) return;
 
-    function setRate() {
-      try {
-        new YT.Player('vslPlayer', {
-          events: {
-            onReady: function (e) {
-              try { e.target.setPlaybackRate(1.2); e.target.playVideo(); } catch (x) {}
-            }
-          }
-        });
-      } catch (e) {}
-    }
-
     facade.addEventListener('click', function () {
       // Le clic (geste utilisateur) autorise la lecture AVEC le son
-      var iframe = document.createElement('iframe');
-      iframe.id = 'vslPlayer';
-      iframe.title = 'Vidéo Suna Films Media';
-      iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
-      iframe.src = 'https://www.youtube.com/embed/' + VIDEO_ID +
-        '?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&controls=1&enablejsapi=1';
-      box.appendChild(iframe);
+      var div = document.createElement('div');
+      div.id = 'vslPlayer';
+      div.className = 'wistia_embed wistia_async_' + WISTIA_ID + ' videoFoam=false';
+      div.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;';
+      box.appendChild(div);
       facade.remove();
+
+      // Options de lecture + vitesse ×1.2 + son via l'API Wistia
+      window._wq = window._wq || [];
+      window._wq.push({
+        id: WISTIA_ID,
+        options: { autoPlay: true, playbar: true, playButton: true },
+        onReady: function (video) {
+          try { video.playbackRate(1.2); video.unmute(); video.play(); } catch (e) {}
+        }
+      });
+
+      // Charge le runtime Wistia une seule fois
+      if (!window.__wistiaLoaded) {
+        window.__wistiaLoaded = true;
+        ['https://fast.wistia.com/embed/medias/' + WISTIA_ID + '.jsonp',
+         'https://fast.wistia.com/assets/external/E-v1.js'].forEach(function (src) {
+          var s = document.createElement('script');
+          s.src = src; s.async = true;
+          document.head.appendChild(s);
+        });
+      }
 
       if (typeof fbq !== 'undefined') fbq('trackCustom', 'VideoPlay');
       track('video_play', 'played', 'yes');
-
-      // Lecture ×1.2 via l'API
-      if (window.YT && window.YT.Player) {
-        setRate();
-      } else {
-        var tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        document.head.appendChild(tag);
-        window.onYouTubeIframeAPIReady = setRate;
-      }
     });
   })();
 
